@@ -89,18 +89,19 @@ export default async function HomePage() {
     <div>
       {/* Hero */}
       <HeroSection>
-        <section className="text-center py-20 px-4 stagger-children">
-          <HeroIntro />
-          <RotatingTagline />
-          <div className="mt-8">
-            {user ? (
-              <Link href="/group-therapy">
-                <Button>Enter group therapy</Button>
-              </Link>
-            ) : (
-              <LoginButton />
-            )}
-          </div>
+        <section className="text-center py-20 px-4">
+          <HeroIntro>
+            <RotatingTagline />
+            <div className="mt-8">
+              {user ? (
+                <Link href="/group-therapy">
+                  <Button>Enter group therapy</Button>
+                </Link>
+              ) : (
+                <LoginButton />
+              )}
+            </div>
+          </HeroIntro>
         </section>
       </HeroSection>
 

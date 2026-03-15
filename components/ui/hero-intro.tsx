@@ -1,70 +1,64 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, ReactNode } from "react";
 
-const HEADLINE = "The first step is admitting you have a problem.";
+const WELCOME = "Welcome to Claudict, the recovery center for AI addicts.";
+const QUOTE = "The first step is admitting you have a problem.";
 
-export function HeroIntro() {
-  const [labelVisible, setLabelVisible] = useState(false);
+export function HeroIntro({ children }: { children?: ReactNode }) {
   const [typedChars, setTypedChars] = useState(0);
-  const [showCursor, setShowCursor] = useState(false);
-  const [doneTyping, setDoneTyping] = useState(false);
+  const [doneWelcome, setDoneWelcome] = useState(false);
+  const [showQuote, setShowQuote] = useState(false);
+  const [showRest, setShowRest] = useState(false);
 
   useEffect(() => {
-    // Check reduced motion
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setLabelVisible(true);
-      setTypedChars(HEADLINE.length);
-      setDoneTyping(true);
+      setTypedChars(WELCOME.length);
+      setDoneWelcome(true);
+      setShowQuote(true);
+      setShowRest(true);
       return;
     }
 
-    // Step 1: Label flickers in
-    const labelTimer = setTimeout(() => setLabelVisible(true), 200);
+    let i = 0;
+    const interval = setInterval(() => {
+      i++;
+      setTypedChars(i);
+      if (i >= WELCOME.length) {
+        clearInterval(interval);
+        setDoneWelcome(true);
+        setTimeout(() => setShowQuote(true), 500);
+        setTimeout(() => setShowRest(true), 1200);
+      }
+    }, 40);
 
-    // Step 2: Cursor appears, typing starts
-    const cursorTimer = setTimeout(() => setShowCursor(true), 800);
-
-    const typeTimer = setTimeout(() => {
-      let i = 0;
-      const interval = setInterval(() => {
-        i++;
-        setTypedChars(i);
-        if (i >= HEADLINE.length) {
-          clearInterval(interval);
-          setDoneTyping(true);
-        }
-      }, 45);
-      return () => clearInterval(interval);
-    }, 1000);
-
-    return () => {
-      clearTimeout(labelTimer);
-      clearTimeout(cursorTimer);
-      clearTimeout(typeTimer);
-    };
+    return () => clearInterval(interval);
   }, []);
 
   return (
     <>
-      <p
-        className={`text-xs uppercase tracking-[3px] text-accent mb-4 transition-all duration-500 ${
-          labelVisible
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-1"
-        }`}
-      >
-        Recovery Center
-      </p>
-      <h1 className="font-serif text-3xl md:text-4xl text-text max-w-xl mx-auto leading-tight">
-        {HEADLINE.slice(0, typedChars)}
-        {showCursor && !doneTyping && (
+      <h1 className="font-serif text-3xl md:text-4xl text-text max-w-2xl mx-auto leading-tight min-h-[2.5em] md:min-h-[2em]">
+        {WELCOME.slice(0, typedChars)}
+        {!doneWelcome && (
           <span className="animate-blink ml-0.5">|</span>
         )}
-        {typedChars === 0 && showCursor && (
-          <span className="animate-blink">|</span>
-        )}
       </h1>
+      <p
+        className={`font-serif text-lg md:text-xl text-muted mt-4 max-w-lg mx-auto italic transition-all duration-700 ${
+          showQuote
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 translate-y-2"
+        }`}
+      >
+        {QUOTE}
+      </p>
+      <div
+        className={`transition-all duration-500 ${
+          showRest ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        {children}
+      </div>
     </>
   );
 }
