@@ -33,7 +33,7 @@ export async function Header() {
           <Link href="/sponsor" className="hover:text-text transition-colors">
             Sponsor
           </Link>
-          <Link href="/intervention" className="hover:text-text transition-colors">
+          <Link href="/intervention" className="text-accent/70 hover:text-accent transition-colors">
             Intervention
           </Link>
         </nav>
