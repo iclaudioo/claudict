@@ -33,6 +33,9 @@ export async function Header() {
           <Link href="/sponsor" className="hover:text-text transition-colors">
             Sponsor
           </Link>
+          <Link href="/intervention" className="hover:text-text transition-colors">
+            Intervention
+          </Link>
         </nav>
 
         <div className="flex items-center gap-2">

@@ -8,6 +8,7 @@ const NAV_ITEMS = [
   { href: "/clinical-evidence", label: "Evidence" },
   { href: "/relapse-gallery", label: "Relapses" },
   { href: "/sponsor", label: "Sponsor" },
+  { href: "/intervention", label: "Intervention" },
 ];
 
 export function MobileNav({ isLoggedIn }: { isLoggedIn: boolean }) {

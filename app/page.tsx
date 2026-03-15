@@ -8,6 +8,7 @@ import { timeAgo } from "@/lib/utils";
 import { RotatingTagline } from "@/components/ui/rotating-tagline";
 import { ActivityTicker } from "@/components/ui/activity-ticker";
 import { RelapseCounter } from "@/components/ui/relapse-counter";
+import { ThoughtsAndPrayers } from "@/components/ui/thoughts-and-prayers";
 import {
   HeroSection,
   RecoveryLabel,
@@ -169,6 +170,23 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Intervention CTA */}
+      <section className="max-w-3xl mx-auto px-4 pb-8">
+        <Link href="/intervention">
+          <Card className="text-center py-6 hover:border-accent/30 transition-colors group">
+            <p className="text-xs uppercase tracking-[2px] text-accent/60 mb-1 font-mono">
+              Concerned partner program
+            </p>
+            <p className="text-sm text-text group-hover:text-accent transition-colors">
+              Is your loved one showing signs of Claude dependency?
+            </p>
+            <p className="text-xs text-muted mt-1">
+              File an intervention report &rarr;
+            </p>
+          </Card>
+        </Link>
+      </section>
+
       {/* Latest evidence */}
       {evidence && evidence.length > 0 && (
         <section className="max-w-3xl mx-auto px-4 pb-12">
@@ -199,6 +217,9 @@ export default async function HomePage() {
           </div>
         </section>
       )}
+
+      {/* Thoughts & prayers */}
+      <ThoughtsAndPrayers />
     </div>
   );
 }
