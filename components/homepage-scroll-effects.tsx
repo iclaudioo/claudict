@@ -7,7 +7,7 @@ import { useScrollProgress } from "@/hooks/use-scroll-progress";
 
 export function HeroSection({ children }: { children: ReactNode }) {
   return (
-    <ScrollAnimated parallax={-40} opacity={[1, 0]}>
+    <ScrollAnimated parallax={-40} opacity={[1, 0]} startAtZero>
       {children}
     </ScrollAnimated>
   );

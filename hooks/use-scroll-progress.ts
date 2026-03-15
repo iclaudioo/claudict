@@ -2,10 +2,18 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 
-export function useScrollProgress(options?: { disableOnMobile?: boolean }) {
+interface ScrollProgressOptions {
+  disableOnMobile?: boolean;
+  /** Start progress at 0 regardless of initial position.
+   *  Use for elements visible on page load (hero, etc). */
+  startAtZero?: boolean;
+}
+
+export function useScrollProgress(options?: ScrollProgressOptions) {
   const ref = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
   const rafId = useRef<number>(0);
+  const initialOffset = useRef<number | null>(null);
 
   const update = useCallback(() => {
     const el = ref.current;
@@ -17,22 +25,33 @@ export function useScrollProgress(options?: { disableOnMobile?: boolean }) {
     // 0 = element just entering bottom, 1 = element leaving top
     const total = windowHeight + rect.height;
     const current = windowHeight - rect.top;
-    const p = Math.max(0, Math.min(1, current / total));
+    const raw = Math.max(0, Math.min(1, current / total));
 
-    setProgress(p);
-  }, []);
+    if (options?.startAtZero) {
+      // On first call, capture the initial progress as baseline
+      if (initialOffset.current === null) {
+        initialOffset.current = raw;
+      }
+      // Remap so progress=0 at initial position, 1 at leaving
+      const range = 1 - initialOffset.current;
+      const p = range > 0
+        ? Math.max(0, Math.min(1, (raw - initialOffset.current) / range))
+        : 0;
+      setProgress(p);
+    } else {
+      setProgress(raw);
+    }
+  }, [options?.startAtZero]);
 
   useEffect(() => {
-    // Respect reduced motion
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReduced) {
-      setProgress(1);
+      setProgress(options?.startAtZero ? 0 : 1);
       return;
     }
 
-    // Optionally disable on mobile
     if (options?.disableOnMobile && window.innerWidth < 768) {
-      setProgress(0.5);
+      setProgress(options?.startAtZero ? 0 : 0.5);
       return;
     }
 
@@ -50,7 +69,7 @@ export function useScrollProgress(options?: { disableOnMobile?: boolean }) {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
-  }, [update, options?.disableOnMobile]);
+  }, [update, options?.disableOnMobile, options?.startAtZero]);
 
   return { ref, progress };
 }

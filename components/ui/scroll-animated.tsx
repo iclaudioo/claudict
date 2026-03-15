@@ -14,6 +14,8 @@ interface ScrollAnimatedProps {
   translateX?: Range;
   disableOnMobile?: boolean;
   className?: string;
+  /** Start progress at 0 at initial position. Use for top-of-page elements. */
+  startAtZero?: boolean;
 }
 
 function lerp(start: number, end: number, t: number) {
@@ -29,14 +31,14 @@ export function ScrollAnimated({
   translateX,
   disableOnMobile = !!parallax,
   className,
+  startAtZero,
 }: ScrollAnimatedProps) {
-  const { ref, progress } = useScrollProgress({ disableOnMobile });
+  const { ref, progress } = useScrollProgress({ disableOnMobile, startAtZero });
 
   const transforms: string[] = [];
 
   if (parallax) {
-    // Parallax: shift based on progress, centered at 0.5
-    const offset = (progress - 0.5) * parallax;
+    const offset = (progress - (startAtZero ? 0 : 0.5)) * parallax;
     transforms.push(`translateY(${offset}px)`);
   }
 
