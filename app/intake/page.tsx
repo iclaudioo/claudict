@@ -36,13 +36,13 @@ export default async function IntakePage({
     <div className="max-w-lg mx-auto px-4 py-16">
       <div className="text-center mb-10">
         <p className="text-xs uppercase tracking-[3px] text-accent mb-3">
-          Intake process
+          Clinical assessment
         </p>
         <h1 className="text-2xl font-serif text-text">
-          Admitting you have a problem is the first step.
+          Before we can admit you, we need to assess the damage.
         </h1>
         <p className="text-sm text-muted mt-3">
-          Please complete this form honestly. Denial only prolongs treatment.
+          Answer honestly. Lying only delays your diagnosis.
         </p>
       </div>
 
