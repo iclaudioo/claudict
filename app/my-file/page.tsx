@@ -74,7 +74,14 @@ export default async function MyFilePage() {
           />
         )}
         <div className="flex-1">
-          <h1 className="text-xl font-semibold">{profile.username}</h1>
+          <div className="flex items-center justify-between">
+            <h1 className="text-xl font-semibold">{profile.username}</h1>
+            <form action={signOut}>
+              <Button variant="ghost" type="submit" className="text-muted text-xs">
+                Leave facility
+              </Button>
+            </form>
+          </div>
           <p className="text-sm text-muted">
             Admitted {formatDate(profile.created_at)}
           </p>
@@ -138,11 +145,6 @@ export default async function MyFilePage() {
       {/* Actions */}
       <div className="flex items-center gap-3">
         <ShareButton username={profile.username} />
-        <form action={signOut}>
-          <Button variant="ghost" type="submit" className="text-muted">
-            Leave facility
-          </Button>
-        </form>
       </div>
     </div>
   );
