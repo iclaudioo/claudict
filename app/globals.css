@@ -307,3 +307,24 @@ body::before {
   background-repeat: repeat;
   background-size: 256px 256px;
 }
+
+/* ============================================
+   Activity ticker
+   ============================================ */
+
+@keyframes ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-ticker {
+  animation: ticker 60s linear infinite;
+}
+
+.animate-ticker:hover {
+  animation-play-state: paused;
+}

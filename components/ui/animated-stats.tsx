@@ -6,6 +6,7 @@ interface Stat {
   value: number | string;
   label: string;
   icon: ReactNode;
+  tooltip?: string;
 }
 
 interface AnimatedStatsProps {
@@ -91,7 +92,7 @@ export function AnimatedStats({ stats }: AnimatedStatsProps) {
       {stats.map((stat, i) => (
         <div
           key={stat.label}
-          className="text-center animate-fade-up"
+          className="text-center animate-fade-up group"
           style={{ "--stagger": i } as React.CSSProperties}
         >
           <div className="flex justify-center mb-2 text-accent">{stat.icon}</div>
@@ -101,6 +102,11 @@ export function AnimatedStats({ stats }: AnimatedStatsProps) {
           <p className="text-xs text-muted uppercase tracking-wider mt-2">
             {stat.label}
           </p>
+          {stat.tooltip && (
+            <p className="text-[10px] text-accent/60 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 max-w-[140px] mx-auto">
+              {stat.tooltip}
+            </p>
+          )}
         </div>
       ))}
     </div>
