@@ -1,4 +1,6 @@
-# Claudict Recovery Center
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project
 
@@ -13,10 +15,47 @@ Community website voor Claude Code-verslaafden. Satirisch verslavingskliniek-the
 - Supabase (PostgreSQL, Auth met GitHub OAuth, Storage)
 - Vercel (hosting)
 
+## Commands
+
+```bash
+npm run dev          # Start dev server (localhost:3000)
+npm run build        # Production build
+npm run start        # Start production server
+npm run lint         # ESLint
+```
+
 ## Documenten
 
 - **Spec:** `docs/superpowers/specs/2026-03-15-claudict-design.md`
 - **Implementatieplan:** `docs/superpowers/plans/2026-03-15-claudict-implementation.md`
+
+## Architectuur
+
+### Supabase clients
+
+Drie clients voor verschillende contexten:
+- `lib/supabase/client.ts`: browser client (Client Components)
+- `lib/supabase/server.ts`: server client (Server Components, API routes) + `createServiceClient()` voor service role operaties
+- `lib/supabase/helpers.ts`: gedeelde helpers, gebruikt door `middleware.ts`
+
+`createServiceClient()` is nodig voor badge inserts. RLS op `profile_badges` blokkeert anon key, alleen service role mag schrijven.
+
+### Data flow
+
+- Server Components halen data op via `createClient()` uit `lib/supabase/server.ts`
+- Client Components gebruiken browser client voor mutaties (votes, relapse button, form submissions)
+- Auth callback via `/auth/callback/route.ts` wisselt OAuth code voor sessie
+- `middleware.ts` refresht sessie-tokens op elke request
+
+### Database triggers
+
+- `reply_count` en `last_activity_at` op posts: bijgewerkt via Postgres trigger bij comment insert/delete
+- `vote_count` op evidence: bijgewerkt via Postgres trigger bij evidence_votes insert/delete
+- `updated_at` op alle tabellen: auto-set via trigger
+
+### Badge systeem
+
+Badges worden **niet** via database triggers toegekend. Applicatielogica in API routes checkt criteria na relevante acties en gebruikt `createServiceClient()` voor inserts.
 
 ## Design system
 
@@ -58,10 +97,12 @@ Alle UI-tekst gebruikt verslavingskliniek-taal:
 
 - Taal in de app: Engels
 - Server Components als default, Client Components alleen voor interactiviteit
-- Supabase service role client (`createServiceClient`) voor badge inserts (RLS blokkeert anon key op `profile_badges`)
 - Shared constants in `lib/constants.ts`
 - Utility functies in `lib/utils.ts`
 - Category labels altijd via `CATEGORIES` constant, niet inline
+- Storage pad: `evidence/{user_id}/{uuid}.{ext}` en `showcases/{user_id}/{uuid}.{ext}`
+- Paginering: offset-based, 20 items (forum/evidence), 12 items (showcase grid)
+- Rate limiting: server-side timestamp checks in API routes
 
 ## Formattering
 
