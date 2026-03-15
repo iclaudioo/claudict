@@ -19,6 +19,9 @@
   --radius-sm: 6px;
   --radius-md: 8px;
   --radius-lg: 10px;
+
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .dark {
@@ -158,16 +161,16 @@ body {
    ============================================ */
 
 .animate-fade-in {
-  animation: fade-in 400ms ease-out both;
+  animation: fade-in 400ms var(--ease-out-quart) both;
 }
 
 .animate-fade-up {
-  animation: fade-up 500ms ease-out both;
+  animation: fade-up 500ms var(--ease-out-expo) both;
   animation-delay: calc(var(--stagger, 0) * 80ms);
 }
 
 .animate-slide-down {
-  animation: slide-down 300ms ease-out both;
+  animation: slide-down 300ms var(--ease-out-quart) both;
 }
 
 .animate-pulse-accent {
@@ -195,7 +198,7 @@ body {
    ============================================ */
 
 .stagger-children > * {
-  animation: fade-up 500ms ease-out both;
+  animation: fade-up 500ms var(--ease-out-expo) both;
 }
 .stagger-children > *:nth-child(1) { animation-delay: 0ms; }
 .stagger-children > *:nth-child(2) { animation-delay: 80ms; }
@@ -360,4 +363,73 @@ body {
 
 .animate-float {
   animation: float 3s ease-in-out infinite;
+}
+
+/* ============================================
+   Nav link underline
+   ============================================ */
+
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 250ms var(--ease-out-quart);
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ============================================
+   Section link underline slide
+   ============================================ */
+
+.link-slide {
+  position: relative;
+  display: inline-block;
+}
+
+.link-slide::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 200ms var(--ease-out-quart);
+}
+
+.link-slide:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ============================================
+   Card image hover zoom
+   ============================================ */
+
+.card-img-zoom {
+  overflow: hidden;
+}
+
+.card-img-zoom img {
+  transition: transform 400ms var(--ease-out-quart);
+}
+
+.card-img-zoom:hover img {
+  transform: scale(1.03);
 }

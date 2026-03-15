@@ -8,7 +8,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggle}
-      className="text-muted hover:text-text transition-colors p-2"
+      className="text-muted hover:text-text transition-all duration-200 p-2 hover:rotate-12 active:scale-90"
       aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
     >
       {theme === "light" ? (

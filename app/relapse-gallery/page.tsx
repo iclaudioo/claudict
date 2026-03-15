@@ -56,7 +56,7 @@ export default async function RelapseGalleryPage({
         {showcases && showcases.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {showcases.map((showcase: any) => (
-              <Card key={showcase.id} variant="showcase" className="flex flex-col">
+              <Card key={showcase.id} variant="showcase" className="flex flex-col card-img-zoom">
                 {showcase.image_url ? (
                   <img
                     src={showcase.image_url}

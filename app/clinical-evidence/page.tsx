@@ -100,7 +100,7 @@ export default async function ClinicalEvidencePage({
         {evidenceItems && evidenceItems.length > 0 ? (
           <div className="space-y-4">
             {evidenceItems.map((item: any) => (
-              <Card key={item.id} variant="evidence">
+              <Card key={item.id} variant="evidence" className="card-img-zoom">
                 <img
                   src={item.image_url}
                   alt={item.description}

@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ThemeToggle } from "./theme-toggle";
 import { MobileNav } from "./mobile-nav";
+import { HeaderWrapper } from "./header-wrapper";
 import { createClient } from "@/lib/supabase/server";
 
 export async function Header() {
@@ -11,7 +12,7 @@ export async function Header() {
   } = await supabase.auth.getUser();
 
   return (
-    <header className="border-b border-border/50 bg-bg/80 backdrop-blur-lg sticky top-0 z-50">
+    <HeaderWrapper>
       <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <Image src="/logo.png" alt="Claudict" width={48} height={24} />
@@ -21,19 +22,19 @@ export async function Header() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-7 text-[15px] font-medium text-muted">
-          <Link href="/group-therapy" className="hover:text-text transition-colors">
+          <Link href="/group-therapy" className="nav-link hover:text-text transition-colors">
             Group therapy
           </Link>
-          <Link href="/clinical-evidence" className="hover:text-text transition-colors">
+          <Link href="/clinical-evidence" className="nav-link hover:text-text transition-colors">
             Evidence
           </Link>
-          <Link href="/relapse-gallery" className="hover:text-text transition-colors">
+          <Link href="/relapse-gallery" className="nav-link hover:text-text transition-colors">
             Relapses
           </Link>
-          <Link href="/sponsor" className="hover:text-text transition-colors">
+          <Link href="/sponsor" className="nav-link hover:text-text transition-colors">
             Sponsor
           </Link>
-          <Link href="/intervention" className="text-accent/70 hover:text-accent transition-colors">
+          <Link href="/intervention" className="nav-link text-accent/70 hover:text-accent transition-colors">
             Intervention
           </Link>
         </nav>
@@ -58,6 +59,6 @@ export async function Header() {
           )}
         </div>
       </div>
-    </header>
+    </HeaderWrapper>
   );
 }

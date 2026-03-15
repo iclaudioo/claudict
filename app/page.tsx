@@ -146,7 +146,7 @@ export default async function HomePage() {
         <div className="text-center mt-6">
           <Link
             href="/group-therapy"
-            className="text-sm text-accent hover:text-accent-hover transition-colors"
+            className="text-sm text-accent hover:text-accent-hover transition-colors link-slide"
           >
             View all sessions
           </Link>
@@ -170,7 +170,7 @@ export default async function HomePage() {
                   Complete a clinical assessment. Generate an intervention notice.
                 </p>
               </div>
-              <div className="hidden sm:block text-accent/30 group-hover:text-accent/60 transition-colors text-2xl pl-4">
+              <div className="hidden sm:block text-accent/30 group-hover:text-accent/60 group-hover:translate-x-1 transition-all duration-200 text-2xl pl-4">
                 &rarr;
               </div>
             </div>
@@ -203,7 +203,7 @@ export default async function HomePage() {
             <div className="text-center mt-6">
               <Link
                 href="/clinical-evidence"
-                className="text-sm text-accent hover:text-accent-hover transition-colors"
+                className="text-sm text-accent hover:text-accent-hover transition-colors link-slide"
               >
                 View all evidence
               </Link>
