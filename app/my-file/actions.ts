@@ -2,7 +2,6 @@
 
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 export async function recordRelapse() {
   const supabase = await createClient();
@@ -57,10 +56,4 @@ export async function recordRelapse() {
   }
 
   revalidatePath("/my-file");
-}
-
-export async function signOut() {
-  const supabase = await createClient();
-  await supabase.auth.signOut();
-  redirect("/");
 }

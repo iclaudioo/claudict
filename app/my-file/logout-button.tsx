@@ -1,19 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { createClient } from "@/lib/supabase/client";
 
 export function LogoutButton() {
-
-  async function handleLogout() {
-    const supabase = createClient();
-    await supabase.auth.signOut({ scope: "global" });
-    window.location.href = "/";
-  }
-
   return (
-    <Button variant="ghost" onClick={handleLogout} className="text-muted text-xs">
-      Leave facility
-    </Button>
+    <a href="/auth/signout">
+      <Button variant="ghost" className="text-muted text-xs">
+        Leave facility
+      </Button>
+    </a>
   );
 }
