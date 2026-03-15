@@ -34,7 +34,7 @@ export function ScrollProgressBar() {
   }, [update]);
 
   return (
-    <div className="fixed top-[57px] left-0 right-0 h-[2px] z-49 pointer-events-none">
+    <div className="fixed top-14 left-0 right-0 h-[2px] z-49 pointer-events-none">
       <div
         className="h-full bg-accent transition-none"
         style={{

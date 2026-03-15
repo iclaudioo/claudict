@@ -36,7 +36,7 @@ export function ThoughtsAndPrayers() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-4 pb-12">
+    <div className="max-w-lg mx-auto px-4 py-16">
       <div className="relative rounded-lg border border-border bg-surface-elevated/50 py-8 px-4 text-center">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-bg px-3">
           <span className="text-[10px] uppercase tracking-[3px] text-muted/50 font-mono">

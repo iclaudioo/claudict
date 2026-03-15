@@ -10,7 +10,7 @@
   --color-surface: #FFFFFF;
   --color-surface-elevated: #F0EDE7;
 
-  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-sans: var(--font-sans, "IBM Plex Sans"), system-ui, -apple-system, sans-serif;
   --font-serif: Georgia, "Times New Roman", serif;
   --font-heading: var(--font-heading, "DM Serif Display"), "Libre Baskerville", Georgia, serif;
   --font-clinical: var(--font-clinical, "IBM Plex Mono", monospace);

@@ -16,7 +16,7 @@ export async function Header() {
       <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <Image src="/logo.png" alt="Claudict" width={48} height={24} />
-          <span className="text-lg font-bold text-text tracking-tight">
+          <span className="text-sm font-mono font-medium text-text uppercase tracking-widest">
             claudict
           </span>
         </Link>

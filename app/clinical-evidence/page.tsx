@@ -73,7 +73,7 @@ export default async function ClinicalEvidencePage({
         <div className="flex gap-2 mb-6">
           <Link
             href="/clinical-evidence?sort=votes"
-            className={`text-xs px-3 py-1 rounded-full border transition-colors ${
+            className={`text-xs font-mono px-3 py-1 rounded-full border transition-colors ${
               sort === "votes"
                 ? "border-accent text-accent"
                 : "border-border text-muted hover:text-text"
@@ -83,7 +83,7 @@ export default async function ClinicalEvidencePage({
           </Link>
           <Link
             href="/clinical-evidence?sort=newest"
-            className={`text-xs px-3 py-1 rounded-full border transition-colors ${
+            className={`text-xs font-mono px-3 py-1 rounded-full border transition-colors ${
               sort === "newest"
                 ? "border-accent text-accent"
                 : "border-border text-muted hover:text-text"

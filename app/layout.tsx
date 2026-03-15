@@ -1,10 +1,17 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, DM_Serif_Display } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans, DM_Serif_Display } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { ScrollProgressBar } from "@/components/ui/scroll-progress-bar";
 import "./globals.css";
+
+const plexSans = IBM_Plex_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-sans",
+  display: "swap",
+});
 
 const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
@@ -38,7 +45,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${plexMono.variable} ${dmSerif.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${plexSans.variable} ${plexMono.variable} ${dmSerif.variable}`}>
       <head>
         <script
           dangerouslySetInnerHTML={{

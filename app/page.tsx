@@ -154,29 +154,22 @@ export default async function HomePage() {
       </section>
 
       {/* Intervention CTA */}
-      <section className="max-w-3xl mx-auto px-4 py-12">
-        <Link href="/intervention" className="block group">
-          <div className="relative overflow-hidden rounded-lg border border-accent/20 bg-gradient-to-r from-accent/5 via-transparent to-accent/5 p-6 transition-all duration-300 hover:border-accent/40 hover:shadow-lg hover:shadow-accent/5">
-            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-[10px] uppercase tracking-[3px] text-accent/70 font-mono mb-1.5">
-                  Concerned partner program
-                </p>
-                <p className="text-sm text-text font-medium group-hover:text-accent transition-colors">
-                  Is your loved one showing signs of Claude dependency?
-                </p>
-                <p className="text-xs text-muted mt-1">
-                  Complete a clinical assessment. Generate an intervention notice.
-                </p>
-              </div>
-              <div className="hidden sm:block text-accent/30 group-hover:text-accent/60 group-hover:translate-x-1 transition-all duration-200 text-2xl pl-4">
-                &rarr;
-              </div>
+      <section className="border-y border-border">
+        <div className="max-w-3xl mx-auto px-4 py-10">
+          <Link href="/intervention" className="block group">
+            <div className="border-l-2 border-accent pl-5 transition-all duration-200 group-hover:border-l-4">
+              <p className="text-[10px] uppercase tracking-[3px] text-accent font-mono mb-1.5">
+                Urgent: concerned partner program
+              </p>
+              <p className="text-sm text-text font-medium group-hover:text-accent transition-colors">
+                Is your loved one showing signs of Claude dependency?
+              </p>
+              <p className="text-xs text-muted mt-1">
+                Complete a clinical assessment. Generate an intervention notice.
+              </p>
             </div>
-            <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
-          </div>
-        </Link>
+          </Link>
+        </div>
       </section>
 
       {/* Latest evidence */}
@@ -189,7 +182,7 @@ export default async function HomePage() {
             <div className="grid md:grid-cols-3 gap-4">
               {evidence.map((item: any) => (
                 <SlideInRight key={item.id}>
-                  <Card>
+                  <Card variant="log">
                     <p className="text-sm text-text">{item.description}</p>
                     <p className="text-xs text-muted mt-1.5">
                       {item.vote_count} deeply concerning
