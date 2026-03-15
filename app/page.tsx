@@ -6,12 +6,12 @@ import { AnimatedStats } from "@/components/ui/animated-stats";
 import { CATEGORIES } from "@/lib/constants";
 import { timeAgo } from "@/lib/utils";
 import { RotatingTagline } from "@/components/ui/rotating-tagline";
+import { HeroIntro } from "@/components/ui/hero-intro";
 import { ActivityTicker } from "@/components/ui/activity-ticker";
 import { RelapseCounter } from "@/components/ui/relapse-counter";
 import { ThoughtsAndPrayers } from "@/components/ui/thoughts-and-prayers";
 import {
   HeroSection,
-  RecoveryLabel,
   ScrollHeartbeat,
   StatSection,
   TickerSection,
@@ -90,14 +90,7 @@ export default async function HomePage() {
       {/* Hero */}
       <HeroSection>
         <section className="text-center py-20 px-4 stagger-children">
-          <RecoveryLabel>
-            <p className="text-xs uppercase tracking-[3px] text-accent mb-4">
-              Recovery Center
-            </p>
-          </RecoveryLabel>
-          <h1 className="font-serif text-3xl md:text-4xl text-text max-w-xl mx-auto leading-tight">
-            The first step is admitting you have a problem.
-          </h1>
+          <HeroIntro />
           <RotatingTagline />
           <div className="mt-8">
             {user ? (
