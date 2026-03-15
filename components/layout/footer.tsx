@@ -7,7 +7,7 @@ export function Footer() {
       <div className="divider-heartbeat" />
       <div className="max-w-5xl mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-muted font-mono">
-          <p>Claudict Recovery Center. Est. 2026.</p>
+          <p><span className="text-accent">Claudict</span> Recovery Center. Est. 2026.</p>
           <div className="flex gap-6">
             <Link href="/sponsor" className="hover:text-text transition-colors">
               Sponsor a recovery

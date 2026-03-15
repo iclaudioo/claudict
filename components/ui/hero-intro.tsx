@@ -5,6 +5,13 @@ import { useState, useEffect, ReactNode } from "react";
 const WELCOME = "Welcome to Claudict, the recovery center for AI addicts.";
 const QUOTE = "The first step is admitting you have a problem.";
 
+function highlightClaudict(text: string) {
+  const parts = text.split(/(Claudict)/);
+  return parts.map((part, i) =>
+    part === "Claudict" ? <span key={i} className="text-accent">{part}</span> : part
+  );
+}
+
 export function HeroIntro({ children }: { children?: ReactNode }) {
   const [typedChars, setTypedChars] = useState(0);
   const [doneWelcome, setDoneWelcome] = useState(false);
@@ -38,7 +45,7 @@ export function HeroIntro({ children }: { children?: ReactNode }) {
   return (
     <>
       <h1 className="font-serif text-3xl md:text-4xl text-text max-w-2xl mx-auto leading-tight min-h-[2.5em] md:min-h-[2em]">
-        {WELCOME.slice(0, typedChars)}
+        {highlightClaudict(WELCOME.slice(0, typedChars))}
         {!doneWelcome && (
           <span className="animate-blink ml-0.5">|</span>
         )}
