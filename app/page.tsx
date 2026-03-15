@@ -172,18 +172,27 @@ export default async function HomePage() {
 
       {/* Intervention CTA */}
       <section className="max-w-3xl mx-auto px-4 pb-8">
-        <Link href="/intervention">
-          <Card className="text-center py-6 hover:border-accent/30 transition-colors group">
-            <p className="text-xs uppercase tracking-[2px] text-accent/60 mb-1 font-mono">
-              Concerned partner program
-            </p>
-            <p className="text-sm text-text group-hover:text-accent transition-colors">
-              Is your loved one showing signs of Claude dependency?
-            </p>
-            <p className="text-xs text-muted mt-1">
-              File an intervention report &rarr;
-            </p>
-          </Card>
+        <Link href="/intervention" className="block group">
+          <div className="relative overflow-hidden rounded-lg border border-accent/20 bg-gradient-to-r from-accent/5 via-transparent to-accent/5 p-6 transition-all duration-300 hover:border-accent/40 hover:shadow-lg hover:shadow-accent/5">
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-[10px] uppercase tracking-[3px] text-accent/70 font-mono mb-1.5">
+                  Concerned partner program
+                </p>
+                <p className="text-sm text-text font-medium group-hover:text-accent transition-colors">
+                  Is your loved one showing signs of Claude dependency?
+                </p>
+                <p className="text-xs text-muted mt-1">
+                  Complete a clinical assessment. Generate an intervention notice.
+                </p>
+              </div>
+              <div className="hidden sm:block text-accent/30 group-hover:text-accent/60 transition-colors text-2xl pl-4">
+                &rarr;
+              </div>
+            </div>
+            <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
+          </div>
         </Link>
       </section>
 
