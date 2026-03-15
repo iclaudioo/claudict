@@ -61,13 +61,13 @@ export default async function HomePage() {
   }
 
   const [
-    { count: patientCount },
+    { data: intakeStat },
     { data: posts },
     { data: evidence },
     { data: recentRelapses },
     { data: lastRelapse },
   ] = await Promise.all([
-    supabase.from("profiles").select("*", { count: "exact", head: true }),
+    supabase.from("site_stats").select("value").eq("key", "intake_starts").single(),
     supabase
       .from("posts")
       .select("id, title, category, reply_count, last_activity_at, profiles(username)")
@@ -91,7 +91,7 @@ export default async function HomePage() {
   ]);
 
   const stats = [
-    { value: patientCount || 0, label: "Patients", icon: <PatientIcon />, tooltip: "And counting. Nobody leaves." },
+    { value: intakeStat?.value || 0, label: "Patients", icon: <PatientIcon />, tooltip: "And counting. Nobody leaves." },
     { value: "0.3", label: "Avg days clean", icon: <ClockIcon />, tooltip: "Rounded up. Generously." },
     { value: "99.2%", label: "Relapse rate", icon: <ChartUpIcon />, tooltip: "Statistically, you relapsed while reading this." },
   ];
@@ -135,7 +135,7 @@ export default async function HomePage() {
 
       {/* Activity ticker */}
       <TickerSection>
-        <ActivityTicker recentRelapses={recentRelapses || []} patientCount={patientCount || 0} />
+        <ActivityTicker recentRelapses={recentRelapses || []} patientCount={intakeStat?.value || 0} />
       </TickerSection>
 
       {/* Latest threads */}
