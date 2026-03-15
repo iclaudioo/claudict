@@ -141,11 +141,11 @@ export function IntakeForm({ isLoggedIn }: { isLoggedIn: boolean }) {
         </div>
       </div>
 
-      {/* Content area: reaction overlay + steps crossfade in place */}
-      <div className="relative min-h-[280px]">
+      {/* Content area: both layers absolute, no layout shift */}
+      <div className="relative" style={{ minHeight: "380px" }}>
         {/* Reaction overlay */}
         <div
-          className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${
+          className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 z-10 ${
             showReaction ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
         >
@@ -155,7 +155,7 @@ export function IntakeForm({ isLoggedIn }: { isLoggedIn: boolean }) {
         </div>
 
         {/* Steps */}
-        <div className={`transition-opacity duration-300 ${showReaction ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
+        <div className={`absolute inset-x-0 top-0 transition-opacity duration-300 ${showReaction ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
 
         {/* Step 1: Username */}
         {step === 1 && (
