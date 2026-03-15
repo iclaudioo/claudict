@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ThemeToggle } from "./theme-toggle";
 import { MobileNav } from "./mobile-nav";
 import { createClient } from "@/lib/supabase/server";
@@ -13,7 +14,7 @@ export async function Header() {
     <header className="border-b border-border bg-bg sticky top-0 z-50">
       <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 bg-accent rounded-md" />
+          <Image src="/logo.png" alt="Claudict" width={28} height={28} />
           <span className="font-semibold text-text tracking-tight">
             claudict
           </span>
