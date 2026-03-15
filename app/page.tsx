@@ -49,6 +49,17 @@ export default async function HomePage() {
     data: { user },
   } = await supabase.auth.getUser();
 
+  // Check if logged-in user has completed intake
+  let hasProfile = false;
+  if (user) {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("id")
+      .eq("id", user.id)
+      .single();
+    hasProfile = !!profile;
+  }
+
   const [
     { count: patientCount },
     { data: posts },
@@ -93,9 +104,13 @@ export default async function HomePage() {
           <HeroIntro>
             <RotatingTagline />
             <div className="mt-8">
-              {user ? (
+              {user && hasProfile ? (
                 <Link href="/group-therapy">
                   <Button>Enter group therapy</Button>
+                </Link>
+              ) : user && !hasProfile ? (
+                <Link href="/intake">
+                  <Button>Complete your intake</Button>
                 </Link>
               ) : (
                 <LoginButton />
