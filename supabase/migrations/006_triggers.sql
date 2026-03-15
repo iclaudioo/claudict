@@ -5,7 +5,8 @@ begin
   new.updated_at = now();
   return new;
 end;
-$$ language plpgsql;
+$$ language plpgsql
+set search_path = public;
 
 create trigger set_updated_at before update on public.profiles
   for each row execute function public.handle_updated_at();
@@ -35,7 +36,8 @@ begin
     return old;
   end if;
 end;
-$$ language plpgsql;
+$$ language plpgsql
+set search_path = public;
 
 create trigger on_comment_insert after insert on public.comments
   for each row execute function public.handle_comment_change();
@@ -58,7 +60,8 @@ begin
     return old;
   end if;
 end;
-$$ language plpgsql;
+$$ language plpgsql
+set search_path = public;
 
 create trigger on_vote_insert after insert on public.evidence_votes
   for each row execute function public.handle_vote_change();
