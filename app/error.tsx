@@ -11,7 +11,7 @@ export default function Error({
   return (
     <div className="text-center py-24 px-4">
       <p className="font-mono text-5xl text-accent mb-4">500</p>
-      <h1 className="text-xl font-serif text-text">
+      <h1 className="text-xl font-heading text-text">
         The facility is experiencing technical difficulties.
       </h1>
       <p className="text-sm text-muted mt-3">

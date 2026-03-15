@@ -44,14 +44,14 @@ export function HeroIntro({ children }: { children?: ReactNode }) {
 
   return (
     <>
-      <h1 className="font-serif text-3xl md:text-4xl text-text max-w-2xl mx-auto leading-tight min-h-[2.5em] md:min-h-[2em]">
+      <h1 className="font-heading text-3xl md:text-4xl text-text max-w-2xl mx-auto leading-tight min-h-[2.5em] md:min-h-[2em]">
         {highlightClaudict(WELCOME.slice(0, typedChars))}
         {!doneWelcome && (
           <span className="animate-blink ml-0.5">|</span>
         )}
       </h1>
       <p
-        className={`font-serif text-lg md:text-xl text-muted mt-4 max-w-lg mx-auto italic transition-all duration-700 ${
+        className={`font-heading text-lg md:text-xl text-muted mt-4 max-w-lg mx-auto italic transition-all duration-700 ${
           showQuote
             ? "opacity-100 translate-y-0"
             : "opacity-0 translate-y-2"

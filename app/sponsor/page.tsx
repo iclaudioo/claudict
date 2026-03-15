@@ -14,7 +14,7 @@ export default function SponsorPage() {
       <p className="text-xs uppercase tracking-[3px] text-accent mb-4">
         Sponsor a recovery
       </p>
-      <h1 className="text-2xl font-serif mb-4">
+      <h1 className="text-2xl font-heading mb-4">
         Your generosity funds treatment.
       </h1>
       <p className="text-sm text-muted leading-relaxed mb-8">

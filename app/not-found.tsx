@@ -5,7 +5,7 @@ export default function NotFound() {
   return (
     <div className="text-center py-24 px-4">
       <p className="font-mono text-5xl text-accent mb-4">404</p>
-      <h1 className="text-xl font-serif text-text">
+      <h1 className="text-xl font-heading text-text">
         Patient not found.
       </h1>
       <p className="text-sm text-muted mt-3">

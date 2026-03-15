@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Stat {
   value: number | string;
   label: string;
-  icon: ReactNode;
   tooltip?: string;
 }
 
@@ -42,7 +41,6 @@ function AnimatedNumber({ value, animate }: { value: number | string; animate: b
     function tick(now: number) {
       const elapsed = now - start;
       const progress = Math.min(elapsed / duration, 1);
-      // Ease-out cubic
       const eased = 1 - Math.pow(1 - progress, 3);
       setCurrent(eased * num);
 
@@ -84,31 +82,54 @@ export function AnimatedStats({ stats }: AnimatedStatsProps) {
     return () => observer.disconnect();
   }, []);
 
+  const [primary, ...secondary] = stats;
+
   return (
     <div
       ref={ref}
-      className="max-w-3xl mx-auto px-4 py-8 flex justify-center gap-12 md:gap-20"
+      className="max-w-4xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-8 md:gap-12 items-center"
     >
-      {stats.map((stat, i) => (
-        <div
-          key={stat.label}
-          className="text-center animate-fade-up group"
-          style={{ "--stagger": i } as React.CSSProperties}
-        >
-          <div className="flex justify-center mb-2 text-accent">{stat.icon}</div>
-          <p className="text-4xl md:text-5xl font-bold text-accent font-mono tracking-tight">
-            <AnimatedNumber value={stat.value} animate={visible} />
+      {/* Primary stat: patient count */}
+      <div className="animate-fade-up group">
+        <p className="text-[10px] uppercase tracking-[4px] text-muted font-mono mb-2">
+          {primary.label}
+        </p>
+        <p className="text-6xl md:text-7xl font-heading text-accent tracking-tight">
+          <AnimatedNumber value={primary.value} animate={visible} />
+        </p>
+        {primary.tooltip && (
+          <p className="text-[10px] text-accent/60 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            {primary.tooltip}
           </p>
-          <p className="text-xs text-muted uppercase tracking-wider mt-2">
-            {stat.label}
-          </p>
-          {stat.tooltip && (
-            <p className="text-[10px] text-accent/60 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 max-w-[140px] mx-auto">
-              {stat.tooltip}
+        )}
+      </div>
+
+      {/* Secondary stats stacked */}
+      <div className="flex flex-col gap-6">
+        {secondary.map((stat, i) => (
+          <div
+            key={stat.label}
+            className="animate-fade-up group"
+            style={{ "--stagger": i + 1 } as React.CSSProperties}
+          >
+            <p className="text-[10px] uppercase tracking-[3px] text-muted font-mono mb-1">
+              {stat.label}
             </p>
-          )}
-        </div>
-      ))}
+            <p className={`font-mono tracking-tight ${
+              stat.label === "Relapse rate"
+                ? "text-3xl text-accent"
+                : "text-2xl text-text"
+            }`}>
+              <AnimatedNumber value={stat.value} animate={visible} />
+            </p>
+            {stat.tooltip && (
+              <p className="text-[10px] text-accent/60 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                {stat.tooltip}
+              </p>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

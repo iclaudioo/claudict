@@ -35,7 +35,7 @@ export default async function AdmittedPage() {
         <p className="text-xs uppercase tracking-[3px] text-accent mb-3">
           Admission complete
         </p>
-        <h1 className="font-serif text-2xl md:text-3xl mb-2">
+        <h1 className="font-heading text-2xl md:text-3xl mb-2">
           Patient {profile.username} admitted.
         </h1>
         <p className="text-sm text-muted">

@@ -39,7 +39,7 @@ export default async function IntakePage({
         <p className="text-xs uppercase tracking-[3px] text-accent mb-3">
           Clinical assessment
         </p>
-        <h1 className="text-2xl font-serif text-text">
+        <h1 className="text-2xl font-heading text-text">
           Before we can admit you, we need to assess the damage.
         </h1>
         <p className="text-sm text-muted mt-3">

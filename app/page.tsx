@@ -19,29 +19,6 @@ import {
 } from "@/components/homepage-scroll-effects";
 import Link from "next/link";
 
-const PatientIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-    <circle cx="9" cy="7" r="4" />
-    <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-  </svg>
-);
-
-const ClockIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="12" cy="12" r="10" />
-    <polyline points="12 6 12 12 16 14" />
-  </svg>
-);
-
-const ChartUpIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
-    <polyline points="16 7 22 7 22 13" />
-  </svg>
-);
-
 export default async function HomePage() {
   const supabase = await createClient();
   const {
@@ -90,9 +67,9 @@ export default async function HomePage() {
   ]);
 
   const stats = [
-    { value: intakeStat?.value || 0, label: "Patients", icon: <PatientIcon />, tooltip: "And counting. Nobody leaves." },
-    { value: "0.3", label: "Avg days clean", icon: <ClockIcon />, tooltip: "Rounded up. Generously." },
-    { value: "99.2%", label: "Relapse rate", icon: <ChartUpIcon />, tooltip: "Statistically, you relapsed while reading this." },
+    { value: intakeStat?.value || 0, label: "Patients", tooltip: "And counting. Nobody leaves." },
+    { value: "0.3", label: "Avg days clean", tooltip: "Rounded up. Generously." },
+    { value: "99.2%", label: "Relapse rate", tooltip: "Statistically, you relapsed while reading this." },
   ];
 
   return (
@@ -136,8 +113,8 @@ export default async function HomePage() {
       </TickerSection>
 
       {/* Latest threads */}
-      <section className="max-w-3xl mx-auto px-4 py-12">
-        <h2 className="text-sm font-medium text-muted mb-4">
+      <section className="max-w-2xl mx-auto px-4 py-16">
+        <h2 className="text-[10px] uppercase tracking-[3px] text-muted font-mono mb-4">
           Latest from the group
         </h2>
         <div className="space-y-3">
@@ -177,7 +154,7 @@ export default async function HomePage() {
       </section>
 
       {/* Intervention CTA */}
-      <section className="max-w-3xl mx-auto px-4 pb-8">
+      <section className="max-w-3xl mx-auto px-4 py-12">
         <Link href="/intervention" className="block group">
           <div className="relative overflow-hidden rounded-lg border border-accent/20 bg-gradient-to-r from-accent/5 via-transparent to-accent/5 p-6 transition-all duration-300 hover:border-accent/40 hover:shadow-lg hover:shadow-accent/5">
             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
@@ -204,31 +181,33 @@ export default async function HomePage() {
 
       {/* Latest evidence */}
       {evidence && evidence.length > 0 && (
-        <section className="max-w-3xl mx-auto px-4 pb-12">
-          <h2 className="text-sm font-medium text-muted mb-4">
-            Recent evidence
-          </h2>
-          <div className="space-y-3">
-            {evidence.map((item: any) => (
-              <SlideInRight key={item.id}>
-                <Card>
-                  <p className="text-sm text-text">{item.description}</p>
-                  <p className="text-xs text-muted mt-1.5">
-                    {item.vote_count} deeply concerning
-                    {" \u00b7 "}
-                    by {item.profiles?.username || "anonymous"}
-                  </p>
-                </Card>
-              </SlideInRight>
-            ))}
-          </div>
-          <div className="text-center mt-6">
-            <Link
-              href="/clinical-evidence"
-              className="text-sm text-accent hover:text-accent-hover transition-colors"
-            >
-              View all evidence
-            </Link>
+        <section className="border-y border-border bg-surface-elevated/30 py-16">
+          <div className="max-w-4xl mx-auto px-4">
+            <h2 className="text-[10px] uppercase tracking-[3px] text-muted font-mono mb-6">
+              Recent evidence
+            </h2>
+            <div className="grid md:grid-cols-3 gap-4">
+              {evidence.map((item: any) => (
+                <SlideInRight key={item.id}>
+                  <Card>
+                    <p className="text-sm text-text">{item.description}</p>
+                    <p className="text-xs text-muted mt-1.5">
+                      {item.vote_count} deeply concerning
+                      {" \u00b7 "}
+                      by {item.profiles?.username || "anonymous"}
+                    </p>
+                  </Card>
+                </SlideInRight>
+              ))}
+            </div>
+            <div className="text-center mt-6">
+              <Link
+                href="/clinical-evidence"
+                className="text-sm text-accent hover:text-accent-hover transition-colors"
+              >
+                View all evidence
+              </Link>
+            </div>
           </div>
         </section>
       )}

@@ -50,14 +50,14 @@ export default async function GroupTherapyPage({
       <p className="text-xs uppercase tracking-[3px] text-accent mb-2">
         Group therapy
       </p>
-      <h1 className="text-2xl font-serif mb-6">Therapy sessions</h1>
+      <h1 className="text-2xl font-heading mb-6">Therapy sessions</h1>
 
       {/* Category filter */}
       <RevealOnScroll>
         <div className="flex flex-wrap gap-2 mb-6">
           <Link
             href="/group-therapy"
-            className={`text-xs px-3 py-1 rounded-full border transition-colors ${
+            className={`text-xs font-mono px-3 py-1 rounded-full border transition-colors ${
               !category
                 ? "border-accent text-accent"
                 : "border-border text-muted hover:text-text"
@@ -69,7 +69,7 @@ export default async function GroupTherapyPage({
             <Link
               key={key}
               href={`/group-therapy?category=${key}`}
-              className={`inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-full border transition-all duration-200 ${
+              className={`inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1 rounded-full border transition-all duration-200 ${
                 category === key
                   ? meta.activeColor
                   : `${meta.color} opacity-60 hover:opacity-100`
@@ -90,7 +90,7 @@ export default async function GroupTherapyPage({
           <div className="space-y-3">
             {posts.map((post: any) => (
               <Link key={post.id} href={`/group-therapy/${post.id}`}>
-                <Card className="hover:border-accent/30 transition-colors">
+                <Card variant="log">
                   <p className="font-medium">{post.title}</p>
                   <p className="text-xs text-muted mt-1.5 flex items-center gap-1 flex-wrap">
                     <span className={`inline-block w-1.5 h-1.5 rounded-full ${CATEGORY_META[post.category]?.color.split(' ')[0].replace('text-', 'bg-') || 'bg-muted'}`} />

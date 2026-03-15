@@ -64,7 +64,7 @@ export default async function ClinicalEvidencePage({
       <p className="text-xs uppercase tracking-[3px] text-accent mb-2">
         Clinical evidence
       </p>
-      <h1 className="text-2xl font-serif mb-6">
+      <h1 className="text-2xl font-heading mb-6">
         Documented cases
       </h1>
 
@@ -100,25 +100,27 @@ export default async function ClinicalEvidencePage({
         {evidenceItems && evidenceItems.length > 0 ? (
           <div className="space-y-4">
             {evidenceItems.map((item: any) => (
-              <Card key={item.id}>
+              <Card key={item.id} variant="evidence">
                 <img
                   src={item.image_url}
                   alt={item.description}
-                  className="w-full rounded-md mb-3 border border-border"
+                  className="w-full"
                   loading="lazy"
                 />
-                <p className="text-sm">{item.description}</p>
-                <div className="flex items-center justify-between mt-3">
-                  <p className="text-xs text-muted">
-                    {item.profiles?.username || "anonymous"}
-                    {" \u00b7 "}
-                    {timeAgo(item.created_at)}
-                  </p>
-                  <VoteButton
-                    evidenceId={item.id}
-                    voteCount={item.vote_count}
-                    hasVoted={userVotes.has(item.id)}
-                  />
+                <div className="p-4">
+                  <p className="text-sm">{item.description}</p>
+                  <div className="flex items-center justify-between mt-3">
+                    <p className="text-xs text-muted">
+                      {item.profiles?.username || "anonymous"}
+                      {" \u00b7 "}
+                      {timeAgo(item.created_at)}
+                    </p>
+                    <VoteButton
+                      evidenceId={item.id}
+                      voteCount={item.vote_count}
+                      hasVoted={userVotes.has(item.id)}
+                    />
+                  </div>
                 </div>
               </Card>
             ))}

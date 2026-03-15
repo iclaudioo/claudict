@@ -105,7 +105,7 @@ claudict.com — Because someone has to care.`;
           <p className="text-xs uppercase tracking-[3px] text-accent mb-2">
             Intervention filed
           </p>
-          <h1 className="font-serif text-2xl md:text-3xl text-text">
+          <h1 className="font-heading text-2xl md:text-3xl text-text">
             Clinical intervention notice
           </h1>
         </div>
@@ -143,7 +143,7 @@ claudict.com — Because someone has to care.`;
         <p className="text-xs uppercase tracking-[3px] text-accent mb-2">
           Concerned partner program
         </p>
-        <h1 className="font-serif text-2xl md:text-3xl text-text">
+        <h1 className="font-heading text-2xl md:text-3xl text-text">
           Report a loved one
         </h1>
         <p className="text-sm text-muted mt-3 max-w-md mx-auto">

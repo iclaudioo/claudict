@@ -46,7 +46,7 @@ export default async function RelapseGalleryPage({
       <p className="text-xs uppercase tracking-[3px] text-accent mb-2">
         Relapse gallery
       </p>
-      <h1 className="text-2xl font-serif mb-6">
+      <h1 className="text-2xl font-heading mb-6">
         Projects built during episodes
       </h1>
 
@@ -56,17 +56,17 @@ export default async function RelapseGalleryPage({
         {showcases && showcases.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {showcases.map((showcase: any) => (
-              <Card key={showcase.id} className="flex flex-col">
+              <Card key={showcase.id} variant="showcase" className="flex flex-col">
                 {showcase.image_url ? (
                   <img
                     src={showcase.image_url}
                     alt={showcase.title}
-                    className="w-full h-40 object-cover rounded-md mb-3 border border-border"
+                    className="w-full h-40 object-cover"
                     loading="lazy"
                   />
                 ) : (
                   <div
-                    className="w-full h-40 rounded-md mb-3 border border-border bg-surface-elevated flex items-center justify-center"
+                    className="w-full h-40 bg-surface-elevated flex items-center justify-center"
                     style={{
                       backgroundImage:
                         "repeating-linear-gradient(135deg, transparent, transparent 10px, var(--color-border) 10px, var(--color-border) 11px)",
@@ -85,33 +85,35 @@ export default async function RelapseGalleryPage({
                     </svg>
                   </div>
                 )}
-                <h3 className="font-medium text-sm">{showcase.title}</h3>
-                <p className="text-xs text-muted mt-1 flex-1">
-                  {showcase.description}
-                </p>
-                {showcase.tech_stack && showcase.tech_stack.length > 0 && (
-                  <div className="flex flex-wrap gap-1 mt-3">
-                    {showcase.tech_stack.map((tech: string) => (
-                      <BadgePill key={tech}>{tech}</BadgePill>
-                    ))}
-                  </div>
-                )}
-                <div className="flex items-center justify-between mt-3 pt-3 border-t border-border">
-                  <p className="text-xs text-muted">
-                    {showcase.profiles?.username || "anonymous"}
-                    {" \u00b7 "}
-                    {timeAgo(showcase.created_at)}
+                <div className="p-4 flex flex-col flex-1">
+                  <h3 className="font-medium text-sm">{showcase.title}</h3>
+                  <p className="text-xs text-muted mt-1 flex-1">
+                    {showcase.description}
                   </p>
-                  {showcase.project_url && (
-                    <a
-                      href={showcase.project_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs text-accent hover:text-accent-hover transition-colors"
-                    >
-                      View project
-                    </a>
+                  {showcase.tech_stack && showcase.tech_stack.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mt-3">
+                      {showcase.tech_stack.map((tech: string) => (
+                        <BadgePill key={tech}>{tech}</BadgePill>
+                      ))}
+                    </div>
                   )}
+                  <div className="flex items-center justify-between mt-3 pt-3 border-t border-border">
+                    <p className="text-xs text-muted">
+                      {showcase.profiles?.username || "anonymous"}
+                      {" \u00b7 "}
+                      {timeAgo(showcase.created_at)}
+                    </p>
+                    {showcase.project_url && (
+                      <a
+                        href={showcase.project_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-accent hover:text-accent-hover transition-colors"
+                      >
+                        View project
+                      </a>
+                    )}
+                  </div>
                 </div>
               </Card>
             ))}
