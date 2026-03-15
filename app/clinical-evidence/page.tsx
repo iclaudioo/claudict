@@ -7,6 +7,7 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { VoteButton } from "@/components/evidence/vote-button";
 import { SubmitEvidenceForm } from "./submit-form";
 import { timeAgo } from "@/lib/utils";
+import { RevealOnScroll } from "@/components/ui/reveal-on-scroll";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -68,64 +69,68 @@ export default async function ClinicalEvidencePage({
       </h1>
 
       {/* Sort toggle */}
-      <div className="flex gap-2 mb-6">
-        <Link
-          href="/clinical-evidence?sort=votes"
-          className={`text-xs px-3 py-1 rounded-full border transition-colors ${
-            sort === "votes"
-              ? "border-accent text-accent"
-              : "border-border text-muted hover:text-text"
-          }`}
-        >
-          Most concerning
-        </Link>
-        <Link
-          href="/clinical-evidence?sort=newest"
-          className={`text-xs px-3 py-1 rounded-full border transition-colors ${
-            sort === "newest"
-              ? "border-accent text-accent"
-              : "border-border text-muted hover:text-text"
-          }`}
-        >
-          Newest
-        </Link>
-      </div>
+      <RevealOnScroll>
+        <div className="flex gap-2 mb-6">
+          <Link
+            href="/clinical-evidence?sort=votes"
+            className={`text-xs px-3 py-1 rounded-full border transition-colors ${
+              sort === "votes"
+                ? "border-accent text-accent"
+                : "border-border text-muted hover:text-text"
+            }`}
+          >
+            Most concerning
+          </Link>
+          <Link
+            href="/clinical-evidence?sort=newest"
+            className={`text-xs px-3 py-1 rounded-full border transition-colors ${
+              sort === "newest"
+                ? "border-accent text-accent"
+                : "border-border text-muted hover:text-text"
+            }`}
+          >
+            Newest
+          </Link>
+        </div>
+      </RevealOnScroll>
 
       {user && <SubmitEvidenceForm />}
 
-      {evidenceItems && evidenceItems.length > 0 ? (
-        <div className="space-y-4">
-          {evidenceItems.map((item: any) => (
-            <Card key={item.id}>
-              <img
-                src={item.image_url}
-                alt={item.description}
-                className="w-full rounded-md mb-3 border border-border"
-                loading="lazy"
-              />
-              <p className="text-sm">{item.description}</p>
-              <div className="flex items-center justify-between mt-3">
-                <p className="text-xs text-muted">
-                  {item.profiles?.username || "anonymous"}
-                  {" \u00b7 "}
-                  {timeAgo(item.created_at)}
-                </p>
-                <VoteButton
-                  evidenceId={item.id}
-                  voteCount={item.vote_count}
-                  hasVoted={userVotes.has(item.id)}
+      <RevealOnScroll delay={100}>
+        {evidenceItems && evidenceItems.length > 0 ? (
+          <div className="space-y-4">
+            {evidenceItems.map((item: any) => (
+              <Card key={item.id}>
+                <img
+                  src={item.image_url}
+                  alt={item.description}
+                  className="w-full rounded-md mb-3 border border-border"
+                  loading="lazy"
                 />
-              </div>
-            </Card>
-          ))}
-        </div>
-      ) : (
-        <EmptyState
-          variant="evidence"
-          title="No evidence submitted yet."
-          description="The patients are covering their tracks."
-        />
-      )}
+                <p className="text-sm">{item.description}</p>
+                <div className="flex items-center justify-between mt-3">
+                  <p className="text-xs text-muted">
+                    {item.profiles?.username || "anonymous"}
+                    {" \u00b7 "}
+                    {timeAgo(item.created_at)}
+                  </p>
+                  <VoteButton
+                    evidenceId={item.id}
+                    voteCount={item.vote_count}
+                    hasVoted={userVotes.has(item.id)}
+                  />
+                </div>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <EmptyState
+            variant="evidence"
+            title="No evidence submitted yet."
+            description="The patients are covering their tracks."
+          />
+        )}
+      </RevealOnScroll>
 
       <Pagination
         currentPage={page}

@@ -2,12 +2,11 @@ import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { daysClean, formatDate } from "@/lib/utils";
-import { Card } from "@/components/ui/card";
 import { BadgePill } from "@/components/ui/badge-pill";
 import { RelapseButton } from "./relapse-button";
+import { ActivityTabs } from "./activity-tabs";
 import { Button } from "@/components/ui/button";
 import { signOut } from "./actions";
-import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Patient file | Claudict Recovery Center",
@@ -128,73 +127,12 @@ export default async function MyFilePage() {
         </div>
       )}
 
-      {/* Activity lists */}
-      {posts && posts.length > 0 && (
-        <div className="mb-8">
-          <h2 className="text-xs uppercase tracking-[2px] text-muted mb-3 flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent/60">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-            </svg>
-            Therapy sessions
-          </h2>
-          <div className="space-y-2">
-            {posts.map((post: any) => (
-              <Link key={post.id} href={`/group-therapy/${post.id}`}>
-                <Card className="py-3 hover:border-accent/30 transition-colors">
-                  <p className="text-sm">{post.title}</p>
-                  <p className="text-xs text-muted mt-1">
-                    {formatDate(post.created_at)}
-                  </p>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {evidenceItems && evidenceItems.length > 0 && (
-        <div className="mb-8">
-          <h2 className="text-xs uppercase tracking-[2px] text-muted mb-3 flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent/60">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-              <circle cx="12" cy="12" r="3" />
-            </svg>
-            Submitted evidence
-          </h2>
-          <div className="space-y-2">
-            {evidenceItems.map((item: any) => (
-              <Card key={item.id} className="py-3">
-                <p className="text-sm">{item.description}</p>
-                <p className="text-xs text-muted mt-1">
-                  {item.vote_count} deeply concerning
-                </p>
-              </Card>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {showcases && showcases.length > 0 && (
-        <div className="mb-8">
-          <h2 className="text-xs uppercase tracking-[2px] text-muted mb-3 flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent/60">
-              <polyline points="16 18 22 12 16 6" />
-              <polyline points="8 6 2 12 8 18" />
-            </svg>
-            Relapses
-          </h2>
-          <div className="space-y-2">
-            {showcases.map((s: any) => (
-              <Card key={s.id} className="py-3">
-                <p className="text-sm">{s.title}</p>
-                <p className="text-xs text-muted mt-1">
-                  {formatDate(s.created_at)}
-                </p>
-              </Card>
-            ))}
-          </div>
-        </div>
-      )}
+      {/* Activity dossier tabs */}
+      <ActivityTabs
+        posts={posts || []}
+        evidence={evidenceItems || []}
+        showcases={showcases || []}
+      />
 
       {/* Sign out */}
       <form action={signOut}>

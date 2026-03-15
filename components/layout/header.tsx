@@ -11,7 +11,7 @@ export async function Header() {
   } = await supabase.auth.getUser();
 
   return (
-    <header className="border-b border-border bg-bg sticky top-0 z-50">
+    <header className="border-b border-border/50 bg-bg/80 backdrop-blur-lg sticky top-0 z-50">
       <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <Image src="/logo.png" alt="Claudict" width={48} height={24} />

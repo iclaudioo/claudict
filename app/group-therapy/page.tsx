@@ -4,9 +4,11 @@ import { getUser } from "@/lib/supabase/auth";
 import { Card } from "@/components/ui/card";
 import { Pagination } from "@/components/ui/pagination";
 import { EmptyState } from "@/components/ui/empty-state";
-import { CATEGORIES } from "@/lib/constants";
+import { CATEGORIES, CATEGORY_META } from "@/lib/constants";
+import { CategoryIcon } from "@/components/ui/category-icon";
 import { NewPostForm } from "./new-post-form";
 import { timeAgo } from "@/lib/utils";
+import { RevealOnScroll } from "@/components/ui/reveal-on-scroll";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -51,61 +53,67 @@ export default async function GroupTherapyPage({
       <h1 className="text-2xl font-serif mb-6">Therapy sessions</h1>
 
       {/* Category filter */}
-      <div className="flex flex-wrap gap-2 mb-6">
-        <Link
-          href="/group-therapy"
-          className={`text-xs px-3 py-1 rounded-full border transition-colors ${
-            !category
-              ? "border-accent text-accent"
-              : "border-border text-muted hover:text-text"
-          }`}
-        >
-          All
-        </Link>
-        {Object.entries(CATEGORIES).map(([key, label]) => (
+      <RevealOnScroll>
+        <div className="flex flex-wrap gap-2 mb-6">
           <Link
-            key={key}
-            href={`/group-therapy?category=${key}`}
+            href="/group-therapy"
             className={`text-xs px-3 py-1 rounded-full border transition-colors ${
-              category === key
+              !category
                 ? "border-accent text-accent"
                 : "border-border text-muted hover:text-text"
             }`}
           >
-            {label}
+            All
           </Link>
-        ))}
-      </div>
+          {Object.entries(CATEGORY_META).map(([key, meta]) => (
+            <Link
+              key={key}
+              href={`/group-therapy?category=${key}`}
+              className={`inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-full border transition-all duration-200 ${
+                category === key
+                  ? meta.activeColor
+                  : `${meta.color} opacity-60 hover:opacity-100`
+              }`}
+            >
+              <CategoryIcon name={meta.icon} />
+              {meta.label}
+            </Link>
+          ))}
+        </div>
+      </RevealOnScroll>
 
       {user && <NewPostForm />}
 
       {/* Posts */}
-      {posts && posts.length > 0 ? (
-        <div className="space-y-3">
-          {posts.map((post: any) => (
-            <Link key={post.id} href={`/group-therapy/${post.id}`}>
-              <Card className="hover:border-accent/30 transition-colors">
-                <p className="font-medium">{post.title}</p>
-                <p className="text-xs text-muted mt-1.5">
-                  {CATEGORIES[post.category] || post.category}
-                  {" \u00b7 "}
-                  {post.profiles?.username || "unknown"}
-                  {" \u00b7 "}
-                  {post.reply_count} replies
-                  {" \u00b7 "}
-                  {timeAgo(post.last_activity_at)}
-                </p>
-              </Card>
-            </Link>
-          ))}
-        </div>
-      ) : (
-        <EmptyState
-          variant="therapy"
-          title="No sessions recorded."
-          description="The patients are in denial. Be the first to share."
-        />
-      )}
+      <RevealOnScroll delay={100}>
+        {posts && posts.length > 0 ? (
+          <div className="space-y-3">
+            {posts.map((post: any) => (
+              <Link key={post.id} href={`/group-therapy/${post.id}`}>
+                <Card className="hover:border-accent/30 transition-colors">
+                  <p className="font-medium">{post.title}</p>
+                  <p className="text-xs text-muted mt-1.5 flex items-center gap-1 flex-wrap">
+                    <span className={`inline-block w-1.5 h-1.5 rounded-full ${CATEGORY_META[post.category]?.color.split(' ')[0].replace('text-', 'bg-') || 'bg-muted'}`} />
+                    {CATEGORIES[post.category] || post.category}
+                    {" \u00b7 "}
+                    {post.profiles?.username || "unknown"}
+                    {" \u00b7 "}
+                    {post.reply_count} replies
+                    {" \u00b7 "}
+                    {timeAgo(post.last_activity_at)}
+                  </p>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <EmptyState
+            variant="therapy"
+            title="No sessions recorded."
+            description="The patients are in denial. Be the first to share."
+          />
+        )}
+      </RevealOnScroll>
 
       <Pagination
         currentPage={page}

@@ -5,6 +5,8 @@ import { Card } from "@/components/ui/card";
 import { AnimatedStats } from "@/components/ui/animated-stats";
 import { CATEGORIES } from "@/lib/constants";
 import { timeAgo } from "@/lib/utils";
+import { Typewriter } from "@/components/ui/typewriter";
+import { HeartbeatMonitor } from "@/components/ui/heartbeat-monitor";
 import Link from "next/link";
 
 const PatientIcon = () => (
@@ -71,8 +73,9 @@ export default async function HomePage() {
           The first step is admitting you have a problem.
         </h1>
         <p className="text-sm text-muted mt-5 max-w-md mx-auto leading-relaxed">
-          A support community for developers who said
-          &quot;just one more prompt&quot; 14 hours ago.
+          A support community for developers who said{" "}
+          <Typewriter text={'"just one more prompt"'} delay={800} speed={40} className="text-accent font-mono" />
+          {" "}14 hours ago.
         </p>
         <div className="mt-8">
           {user ? (
@@ -85,8 +88,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Heartbeat divider */}
-      <div className="divider-heartbeat" />
+      {/* Heartbeat monitor */}
+      <HeartbeatMonitor className="my-0" />
 
       {/* Stats */}
       <section className="border-b border-border bg-surface-elevated">

@@ -3,6 +3,7 @@ import { IBM_Plex_Mono } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ThemeProvider } from "@/components/layout/theme-provider";
+import { CursorGlow } from "@/components/ui/cursor-glow";
 import "./globals.css";
 
 const plexMono = IBM_Plex_Mono({
@@ -52,6 +53,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen flex flex-col bg-bg text-text antialiased">
         <ThemeProvider>
+          <CursorGlow />
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />

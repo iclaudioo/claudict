@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { submitIntake } from "./actions";
+import { DosageSlider } from "./dosage-slider";
 
 export function IntakeForm() {
   return (
@@ -27,44 +28,35 @@ export function IntakeForm() {
       </div>
 
       <div>
-        <label
-          htmlFor="drug_of_choice"
-          className="block text-sm font-medium mb-1.5"
-        >
+        <label className="block text-sm font-medium mb-3">
           Drug of choice
         </label>
-        <select
-          id="drug_of_choice"
-          name="drug_of_choice"
-          required
-          className="w-full rounded-md border border-border bg-surface px-3 py-2 text-sm text-text focus:outline-none focus:ring-2 focus:ring-accent"
-        >
-          <option value="">Select your substance...</option>
-          <option value="Claude Opus">Claude Opus</option>
-          <option value="Claude Sonnet">Claude Sonnet</option>
-          <option value="Claude Haiku">Claude Haiku</option>
-          <option value="All of the above">All of the above (severe case)</option>
-        </select>
+        <div className="grid grid-cols-2 gap-2">
+          {[
+            { value: "Claude Opus", label: "Opus", desc: "The hard stuff", icon: "◆", iconColor: "text-accent" },
+            { value: "Claude Sonnet", label: "Sonnet", desc: "Gateway drug", icon: "♦", iconColor: "text-amber-500" },
+            { value: "Claude Haiku", label: "Haiku", desc: "Microdosing", icon: "•", iconColor: "text-emerald-500" },
+            { value: "All of the above", label: "All", desc: "Severe case", icon: "✕", iconColor: "text-red-500" },
+          ].map((drug) => (
+            <label key={drug.value} className="relative cursor-pointer">
+              <input
+                type="radio"
+                name="drug_of_choice"
+                value={drug.value}
+                required
+                className="peer sr-only"
+              />
+              <div className="rounded-lg border border-border p-3 transition-all duration-200 peer-checked:border-accent peer-checked:bg-accent/5 hover:border-accent/30">
+                <div className={`text-lg mb-1 ${drug.iconColor}`}>{drug.icon}</div>
+                <p className="text-sm font-medium">{drug.label}</p>
+                <p className="text-xs text-muted">{drug.desc}</p>
+              </div>
+            </label>
+          ))}
+        </div>
       </div>
 
-      <div>
-        <label
-          htmlFor="hours_per_day"
-          className="block text-sm font-medium mb-1.5"
-        >
-          Daily usage (hours)
-        </label>
-        <input
-          id="hours_per_day"
-          name="hours_per_day"
-          type="number"
-          required
-          min={1}
-          max={24}
-          placeholder="14"
-          className="w-full rounded-md border border-border bg-surface px-3 py-2 text-sm text-text placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
-        />
-      </div>
+      <DosageSlider />
 
       <div className="flex items-start gap-3">
         <input
