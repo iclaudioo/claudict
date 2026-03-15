@@ -5,10 +5,18 @@ import { Card } from "@/components/ui/card";
 import { AnimatedStats } from "@/components/ui/animated-stats";
 import { CATEGORIES } from "@/lib/constants";
 import { timeAgo } from "@/lib/utils";
-import { HeartbeatMonitor } from "@/components/ui/heartbeat-monitor";
 import { RotatingTagline } from "@/components/ui/rotating-tagline";
 import { ActivityTicker } from "@/components/ui/activity-ticker";
 import { RelapseCounter } from "@/components/ui/relapse-counter";
+import {
+  HeroSection,
+  RecoveryLabel,
+  ScrollHeartbeat,
+  StatSection,
+  TickerSection,
+  SlideInLeft,
+  SlideInRight,
+} from "@/components/homepage-scroll-effects";
 import Link from "next/link";
 
 const PatientIcon = () => (
@@ -79,59 +87,69 @@ export default async function HomePage() {
   return (
     <div>
       {/* Hero */}
-      <section className="text-center py-20 px-4 stagger-children">
-        <p className="text-xs uppercase tracking-[3px] text-accent mb-4">
-          Recovery Center
-        </p>
-        <h1 className="font-serif text-3xl md:text-4xl text-text max-w-xl mx-auto leading-tight">
-          The first step is admitting you have a problem.
-        </h1>
-        <RotatingTagline />
-        <div className="mt-8">
-          {user ? (
-            <Link href="/group-therapy">
-              <Button>Enter group therapy</Button>
-            </Link>
-          ) : (
-            <LoginButton />
-          )}
-        </div>
-      </section>
+      <HeroSection>
+        <section className="text-center py-20 px-4 stagger-children">
+          <RecoveryLabel>
+            <p className="text-xs uppercase tracking-[3px] text-accent mb-4">
+              Recovery Center
+            </p>
+          </RecoveryLabel>
+          <h1 className="font-serif text-3xl md:text-4xl text-text max-w-xl mx-auto leading-tight">
+            The first step is admitting you have a problem.
+          </h1>
+          <RotatingTagline />
+          <div className="mt-8">
+            {user ? (
+              <Link href="/group-therapy">
+                <Button>Enter group therapy</Button>
+              </Link>
+            ) : (
+              <LoginButton />
+            )}
+          </div>
+        </section>
+      </HeroSection>
 
       {/* Heartbeat monitor */}
-      <HeartbeatMonitor className="my-0" />
+      <ScrollHeartbeat className="my-0" />
 
       {/* Stats */}
-      <section className="border-b border-border bg-surface-elevated">
-        <AnimatedStats stats={stats} />
-      </section>
+      <StatSection>
+        <section className="border-b border-border bg-surface-elevated">
+          <AnimatedStats stats={stats} />
+        </section>
+      </StatSection>
 
       {/* Relapse counter */}
       <RelapseCounter lastRelapseAt={lastRelapse?.[0]?.last_relapse_at || new Date().toISOString()} />
 
       {/* Activity ticker */}
-      <ActivityTicker recentRelapses={recentRelapses || []} patientCount={patientCount || 0} />
+      <TickerSection>
+        <ActivityTicker recentRelapses={recentRelapses || []} patientCount={patientCount || 0} />
+      </TickerSection>
 
       {/* Latest threads */}
       <section className="max-w-3xl mx-auto px-4 py-12">
         <h2 className="text-sm font-medium text-muted mb-4">
           Latest from the group
         </h2>
-        <div className="space-y-3 stagger-children">
+        <div className="space-y-3">
           {posts && posts.length > 0 ? (
-            posts.map((post: any) => (
-              <Link key={post.id} href={`/group-therapy/${post.id}`}>
-                <Card className="hover:border-accent/30 transition-colors">
-                  <p className="font-medium text-text">{post.title}</p>
-                  <p className="text-xs text-muted mt-1.5">
-                    {CATEGORIES[post.category] || post.category}
-                    {" \u00b7 "}
-                    {post.reply_count} replies
-                    {" \u00b7 "}
-                    {timeAgo(post.last_activity_at)}
-                  </p>
-                </Card>
-              </Link>
+            posts.map((post: any, i: number) => (
+              <SlideInLeft key={post.id} delay={i * 80}>
+                <Link href={`/group-therapy/${post.id}`}>
+                  <Card className="hover:border-accent/30 transition-colors">
+                    <p className="font-medium text-text">{post.title}</p>
+                    <p className="text-xs text-muted mt-1.5">
+                      {CATEGORIES[post.category] || post.category}
+                      {" \u00b7 "}
+                      {post.reply_count} replies
+                      {" \u00b7 "}
+                      {timeAgo(post.last_activity_at)}
+                    </p>
+                  </Card>
+                </Link>
+              </SlideInLeft>
             ))
           ) : (
             <Card>
@@ -157,16 +175,18 @@ export default async function HomePage() {
           <h2 className="text-sm font-medium text-muted mb-4">
             Recent evidence
           </h2>
-          <div className="space-y-3 stagger-children">
+          <div className="space-y-3">
             {evidence.map((item: any) => (
-              <Card key={item.id}>
-                <p className="text-sm text-text">{item.description}</p>
-                <p className="text-xs text-muted mt-1.5">
-                  {item.vote_count} deeply concerning
-                  {" \u00b7 "}
-                  by {item.profiles?.username || "anonymous"}
-                </p>
-              </Card>
+              <SlideInRight key={item.id}>
+                <Card>
+                  <p className="text-sm text-text">{item.description}</p>
+                  <p className="text-xs text-muted mt-1.5">
+                    {item.vote_count} deeply concerning
+                    {" \u00b7 "}
+                    by {item.profiles?.username || "anonymous"}
+                  </p>
+                </Card>
+              </SlideInRight>
             ))}
           </div>
           <div className="text-center mt-6">

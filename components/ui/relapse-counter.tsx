@@ -1,9 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export function RelapseCounter({ lastRelapseAt }: { lastRelapseAt: string }) {
   const [elapsed, setElapsed] = useState("");
+  const [glitching, setGlitching] = useState(false);
+  const prevSecsRef = useRef<number>(-1);
 
   useEffect(() => {
     function update() {
@@ -11,6 +13,14 @@ export function RelapseCounter({ lastRelapseAt }: { lastRelapseAt: string }) {
       const hours = Math.floor(diff / 3600000);
       const mins = Math.floor((diff % 3600000) / 60000);
       const secs = Math.floor((diff % 60000) / 1000);
+
+      // Trigger glitch on second change
+      if (prevSecsRef.current !== -1 && prevSecsRef.current !== secs) {
+        setGlitching(true);
+        setTimeout(() => setGlitching(false), 150);
+      }
+      prevSecsRef.current = secs;
+
       setElapsed(
         `${String(hours).padStart(2, "0")}:${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`
       );
@@ -23,7 +33,9 @@ export function RelapseCounter({ lastRelapseAt }: { lastRelapseAt: string }) {
   return (
     <div className="text-center py-3 text-xs text-muted font-mono">
       <span className="text-muted/60">Time since last site-wide relapse: </span>
-      <span className="text-accent font-bold">{elapsed}</span>
+      <span className={`text-accent font-bold inline-block ${glitching ? "animate-glitch" : ""}`}>
+        {elapsed}
+      </span>
     </div>
   );
 }

@@ -328,3 +328,51 @@ body::before {
 .animate-ticker:hover {
   animation-play-state: paused;
 }
+
+/* ============================================
+   Glitch effect (relapse counter)
+   ============================================ */
+
+@keyframes glitch {
+  0%, 90%, 100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  92% {
+    transform: translateX(-2px);
+    opacity: 0.8;
+  }
+  94% {
+    transform: translateX(2px);
+    opacity: 0.9;
+  }
+  96% {
+    transform: translateX(-1px);
+    opacity: 0.85;
+  }
+  98% {
+    transform: translateX(1px);
+    opacity: 1;
+  }
+}
+
+.animate-glitch {
+  animation: glitch 150ms ease-out;
+}
+
+/* ============================================
+   Float (decorative)
+   ============================================ */
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
