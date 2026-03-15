@@ -141,19 +141,21 @@ export function IntakeForm({ isLoggedIn }: { isLoggedIn: boolean }) {
         </div>
       </div>
 
-      {/* Reaction overlay */}
-      <div
-        className={`text-center py-8 transition-all duration-300 ${
-          showReaction ? "opacity-100" : "opacity-0 pointer-events-none absolute inset-0"
-        }`}
-      >
-        <p className="text-sm text-accent font-mono italic max-w-sm mx-auto">
-          {reaction}
-        </p>
-      </div>
+      {/* Content area: reaction overlay + steps crossfade in place */}
+      <div className="relative min-h-[280px]">
+        {/* Reaction overlay */}
+        <div
+          className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${
+            showReaction ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+        >
+          <p className="text-sm text-accent font-mono italic max-w-sm text-center">
+            {reaction}
+          </p>
+        </div>
 
-      {/* Steps */}
-      <div className={showReaction ? "opacity-0 pointer-events-none" : "opacity-100 transition-opacity duration-300"}>
+        {/* Steps */}
+        <div className={`transition-opacity duration-300 ${showReaction ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
 
         {/* Step 1: Username */}
         {step === 1 && (
@@ -360,6 +362,7 @@ export function IntakeForm({ isLoggedIn }: { isLoggedIn: boolean }) {
             </p>
           </div>
         )}
+      </div>
       </div>
     </div>
   );
