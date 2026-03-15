@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
+import { createClient } from "@/lib/supabase/client";
 import { submitIntake } from "./actions";
 
 const DRUGS = [
@@ -31,7 +32,7 @@ const TABS_OPTIONS = [
 
 type Step = 1 | 2 | 3 | 4 | 5;
 
-export function IntakeForm() {
+export function IntakeForm({ isLoggedIn }: { isLoggedIn: boolean }) {
   const [step, setStep] = useState<Step>(1);
   const [username, setUsername] = useState("");
   const [drug, setDrug] = useState("");
@@ -40,9 +41,35 @@ export function IntakeForm() {
   const [tabs, setTabs] = useState("");
   const [reaction, setReaction] = useState("");
   const [showReaction, setShowReaction] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const level = getHourLevel(hours);
   const percentage = ((hours - 1) / 23) * 100;
+
+  // Increment patient counter on first visit
+  useEffect(() => {
+    if (!sessionStorage.getItem("intake_counted")) {
+      sessionStorage.setItem("intake_counted", "1");
+      fetch("/api/intake-started", { method: "POST" }).catch(() => {});
+    }
+  }, []);
+
+  // Auto-submit after OAuth return
+  useEffect(() => {
+    const pending = sessionStorage.getItem("intake_pending");
+    if (pending && isLoggedIn) {
+      sessionStorage.removeItem("intake_pending");
+      setSubmitting(true);
+      const data = JSON.parse(pending);
+      const formData = new FormData();
+      formData.append("username", data.username);
+      formData.append("drug_of_choice", data.drug);
+      formData.append("hours_per_day", String(data.hours));
+      if (data.concerned) formData.append("anyone_concerned", "on");
+      submitIntake(formData);
+    }
+  }, [isLoggedIn]);
 
   function triggerReaction(text: string, nextStep: Step) {
     setReaction(text);
@@ -65,6 +92,37 @@ export function IntakeForm() {
   function selectTabs(t: typeof TABS_OPTIONS[0]) {
     setTabs(t.value);
     triggerReaction(t.reaction, 5);
+  }
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    if (!isLoggedIn) {
+      e.preventDefault();
+      // Save quiz data, then trigger OAuth
+      sessionStorage.setItem("intake_pending", JSON.stringify({
+        username: username.trim(),
+        drug,
+        hours,
+        concerned,
+      }));
+      const supabase = createClient();
+      supabase.auth.signInWithOAuth({
+        provider: "github",
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
+    }
+    // If logged in, let the form submit normally to the server action
+  }
+
+  if (submitting) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-sm text-muted font-mono animate-pulse">
+          Processing your admission...
+        </p>
+      </div>
+    );
   }
 
   return (
@@ -287,13 +345,13 @@ export function IntakeForm() {
               </div>
             </div>
 
-            <form action={submitIntake}>
+            <form ref={formRef} action={submitIntake} onSubmit={handleSubmit}>
               <input type="hidden" name="username" value={username.trim()} />
               <input type="hidden" name="drug_of_choice" value={drug} />
               <input type="hidden" name="hours_per_day" value={hours} />
               {concerned && <input type="hidden" name="anyone_concerned" value="on" />}
               <Button type="submit" className="w-full">
-                Confirm admission
+                {isLoggedIn ? "Confirm admission" : "Sign in with GitHub to confirm"}
               </Button>
             </form>
 

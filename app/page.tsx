@@ -1,5 +1,4 @@
 import { createClient } from "@/lib/supabase/server";
-import { LoginButton } from "@/components/layout/login-button";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { AnimatedStats } from "@/components/ui/animated-stats";
@@ -108,12 +107,10 @@ export default async function HomePage() {
                 <Link href="/group-therapy">
                   <Button>Enter group therapy</Button>
                 </Link>
-              ) : user && !hasProfile ? (
-                <Link href="/intake">
-                  <Button>Complete your intake</Button>
-                </Link>
               ) : (
-                <LoginButton />
+                <Link href="/intake">
+                  <Button>Begin intake</Button>
+                </Link>
               )}
             </div>
           </HeroIntro>

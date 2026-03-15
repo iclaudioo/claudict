@@ -1,4 +1,4 @@
-import { createClient, createServiceClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -22,19 +22,6 @@ export async function GET(request: Request) {
           .single();
 
         if (!profile) {
-          // Increment intake_starts counter
-          const service = createServiceClient();
-          const { data: stat } = await service
-            .from("site_stats")
-            .select("value")
-            .eq("key", "intake_starts")
-            .single();
-
-          await service
-            .from("site_stats")
-            .update({ value: (stat?.value || 0) + 1, updated_at: new Date().toISOString() })
-            .eq("key", "intake_starts");
-
           return NextResponse.redirect(`${origin}/intake`);
         }
 

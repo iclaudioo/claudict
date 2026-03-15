@@ -18,16 +18,17 @@ export default async function IntakePage({
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) redirect("/");
+  // Already admitted? Go to patient file
+  if (user) {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("id")
+      .eq("id", user.id)
+      .single();
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("id")
-    .eq("id", user.id)
-    .single();
-
-  if (profile) {
-    redirect("/my-file");
+    if (profile) {
+      redirect("/my-file");
+    }
   }
 
   const params = await searchParams;
@@ -57,7 +58,7 @@ export default async function IntakePage({
         </p>
       )}
 
-      <IntakeForm />
+      <IntakeForm isLoggedIn={!!user} />
     </div>
   );
 }
