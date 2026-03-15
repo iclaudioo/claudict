@@ -50,6 +50,14 @@ Deploy to Vercel:
 2. Add the three environment variables in Vercel project settings
 3. Deploy
 
+## Contributing
+
+Claudict is a community project. Everyone can contribute:
+
+- **Ideas and feedback**: [Discussions](https://github.com/iclaudioo/claudict/discussions)
+- **Bug reports and feature requests**: [Issues](https://github.com/iclaudioo/claudict/issues/new/choose)
+- **Code**: see [CONTRIBUTING.md](CONTRIBUTING.md)
+
 ## Features
 
 - **Intake** (signup): GitHub OAuth with addiction questionnaire

@@ -1,0 +1,35 @@
+name: Feature request
+description: Got an idea to make Claudict better? Tell us.
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What would you like to see?
+      description: Describe the feature or improvement.
+      placeholder: "It would be cool if ..."
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why would this be useful?
+      description: Who benefits and how?
+      placeholder: "This would help because ..."
+    validations:
+      required: false
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Did you consider other approaches?
+    validations:
+      required: false
+  - type: textarea
+    id: mockup
+    attributes:
+      label: Mockup or screenshot
+      description: Visual reference if you have one (drag and drop).
+    validations:
+      required: false

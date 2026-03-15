@@ -1,0 +1,36 @@
+name: Design suggestion
+description: Ideas for visual improvements, animations, or UX changes.
+title: "[Design] "
+labels: ["design"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What would you change?
+      description: Describe the visual or UX improvement.
+      placeholder: "The card layout on the evidence page could ..."
+    validations:
+      required: true
+  - type: textarea
+    id: reference
+    attributes:
+      label: Reference or inspiration
+      description: Links, screenshots, or examples that show what you mean.
+    validations:
+      required: false
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area of the site
+      options:
+        - Homepage
+        - Group therapy (forum)
+        - Clinical evidence (wall of shame)
+        - Relapse gallery (showcase)
+        - Patient file (profile)
+        - Navigation / header / footer
+        - Mobile experience
+        - Dark mode
+        - Other
+    validations:
+      required: true
