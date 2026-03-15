@@ -7,6 +7,7 @@ import { RelapseButton } from "./relapse-button";
 import { ActivityTabs } from "./activity-tabs";
 import { Button } from "@/components/ui/button";
 import { signOut } from "./actions";
+import { ShareButton } from "./share-button";
 
 export const metadata: Metadata = {
   title: "Patient file | Claudict Recovery Center",
@@ -134,12 +135,15 @@ export default async function MyFilePage() {
         showcases={showcases || []}
       />
 
-      {/* Sign out */}
-      <form action={signOut}>
-        <Button variant="ghost" type="submit" className="text-muted">
-          Leave facility
-        </Button>
-      </form>
+      {/* Actions */}
+      <div className="flex items-center gap-3">
+        <ShareButton username={profile.username} />
+        <form action={signOut}>
+          <Button variant="ghost" type="submit" className="text-muted">
+            Leave facility
+          </Button>
+        </form>
+      </div>
     </div>
   );
 }
