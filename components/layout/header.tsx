@@ -20,7 +20,7 @@ export async function Header() {
           </span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-6 text-sm text-muted">
+        <nav className="hidden md:flex items-center gap-7 text-[15px] font-medium text-muted">
           <Link href="/group-therapy" className="hover:text-text transition-colors">
             Group therapy
           </Link>
