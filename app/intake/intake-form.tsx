@@ -75,8 +75,8 @@ export function IntakeForm({ isLoggedIn }: { isLoggedIn: boolean }) {
     setReaction(text);
     setShowReaction(true);
     setTimeout(() => {
+      setStep(nextStep);
       setShowReaction(false);
-      setTimeout(() => setStep(nextStep), 300);
     }, 1800);
   }
 
