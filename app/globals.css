@@ -12,7 +12,8 @@
 
   --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-serif: Georgia, "Times New Roman", serif;
-  --font-mono: "SF Mono", "Fira Code", "Fira Mono", monospace;
+  --font-clinical: var(--font-clinical, "IBM Plex Mono", monospace);
+  --font-mono: "IBM Plex Mono", "SF Mono", "Fira Code", "Fira Mono", monospace;
 
   --radius-sm: 6px;
   --radius-md: 8px;
@@ -39,4 +40,220 @@ body {
 ::selection {
   background-color: var(--color-accent);
   color: white;
+}
+
+/* ============================================
+   Keyframes
+   ============================================ */
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes count-up-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse-accent {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(217, 119, 87, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px 4px rgba(217, 119, 87, 0.2);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(217, 119, 87, 0);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-3px);
+  }
+  40% {
+    transform: translateX(3px);
+  }
+  60% {
+    transform: translateX(-2px);
+  }
+  80% {
+    transform: translateX(2px);
+  }
+}
+
+@keyframes vote-bounce {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes flash-accent {
+  0% {
+    color: var(--color-accent);
+  }
+  100% {
+    color: inherit;
+  }
+}
+
+@keyframes heartbeat-line {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+/* ============================================
+   Animation utility classes
+   ============================================ */
+
+.animate-fade-in {
+  animation: fade-in 400ms ease-out both;
+}
+
+.animate-fade-up {
+  animation: fade-up 500ms ease-out both;
+  animation-delay: calc(var(--stagger, 0) * 80ms);
+}
+
+.animate-slide-down {
+  animation: slide-down 300ms ease-out both;
+}
+
+.animate-pulse-accent {
+  animation: pulse-accent 2s ease-in-out infinite;
+}
+
+.animate-heartbeat {
+  animation: count-up-pulse 600ms ease-out;
+}
+
+.animate-shake {
+  animation: shake 400ms ease-out;
+}
+
+.animate-vote-bounce {
+  animation: vote-bounce 300ms ease-out;
+}
+
+.animate-flash-accent {
+  animation: flash-accent 600ms ease-out;
+}
+
+/* ============================================
+   Staggered children
+   ============================================ */
+
+.stagger-children > * {
+  animation: fade-up 500ms ease-out both;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 80ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 160ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 240ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 320ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 400ms; }
+.stagger-children > *:nth-child(7) { animation-delay: 480ms; }
+.stagger-children > *:nth-child(8) { animation-delay: 560ms; }
+.stagger-children > *:nth-child(9) { animation-delay: 640ms; }
+
+/* ============================================
+   Heartbeat divider
+   ============================================ */
+
+.divider-heartbeat {
+  position: relative;
+  height: 2px;
+  background-color: var(--color-border);
+  overflow: hidden;
+}
+
+.divider-heartbeat::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 40%,
+    var(--color-accent) 45%,
+    var(--color-accent) 46%,
+    transparent 46.5%,
+    transparent 48%,
+    var(--color-accent) 49%,
+    transparent 49.5%,
+    transparent 50%,
+    var(--color-accent) 52%,
+    var(--color-accent) 54%,
+    transparent 54.5%,
+    transparent 56%,
+    var(--color-accent) 57%,
+    transparent 57.5%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: heartbeat-line 4s linear infinite;
+}
+
+/* ============================================
+   Reduced motion
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

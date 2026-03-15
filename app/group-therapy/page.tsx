@@ -101,6 +101,7 @@ export default async function GroupTherapyPage({
         </div>
       ) : (
         <EmptyState
+          variant="therapy"
           title="No sessions recorded."
           description="The patients are in denial. Be the first to share."
         />

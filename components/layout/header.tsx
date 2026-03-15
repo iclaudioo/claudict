@@ -14,7 +14,7 @@ export async function Header() {
     <header className="border-b border-border bg-bg sticky top-0 z-50">
       <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <Image src="/logo.png" alt="Claudict" width={28} height={28} />
+          <Image src="/logo.png" alt="Claudict" width={48} height={24} />
           <span className="font-semibold text-text tracking-tight">
             claudict
           </span>

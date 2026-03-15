@@ -55,13 +55,33 @@ export default async function RelapseGalleryPage({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {showcases.map((showcase: any) => (
             <Card key={showcase.id} className="flex flex-col">
-              {showcase.image_url && (
+              {showcase.image_url ? (
                 <img
                   src={showcase.image_url}
                   alt={showcase.title}
                   className="w-full h-40 object-cover rounded-md mb-3 border border-border"
                   loading="lazy"
                 />
+              ) : (
+                <div
+                  className="w-full h-40 rounded-md mb-3 border border-border bg-surface-elevated flex items-center justify-center"
+                  style={{
+                    backgroundImage:
+                      "repeating-linear-gradient(135deg, transparent, transparent 10px, var(--color-border) 10px, var(--color-border) 11px)",
+                  }}
+                >
+                  <svg
+                    width="40"
+                    height="40"
+                    viewBox="0 0 40 40"
+                    fill="none"
+                    className="text-muted opacity-60"
+                  >
+                    <text x="4" y="30" fontSize="28" fontFamily="monospace" fill="currentColor">
+                      {"{ }"}
+                    </text>
+                  </svg>
+                </div>
               )}
               <h3 className="font-medium text-sm">{showcase.title}</h3>
               <p className="text-xs text-muted mt-1 flex-1">
@@ -96,6 +116,7 @@ export default async function RelapseGalleryPage({
         </div>
       ) : (
         <EmptyState
+          variant="gallery"
           title="No relapses documented."
           description="Everyone is staying clean. (Sure they are.)"
         />

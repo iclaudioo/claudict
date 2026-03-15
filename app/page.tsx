@@ -2,9 +2,33 @@ import { createClient } from "@/lib/supabase/server";
 import { LoginButton } from "@/components/layout/login-button";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { AnimatedStats } from "@/components/ui/animated-stats";
 import { CATEGORIES } from "@/lib/constants";
 import { timeAgo } from "@/lib/utils";
 import Link from "next/link";
+
+const PatientIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+    <circle cx="9" cy="7" r="4" />
+    <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+  </svg>
+);
+
+const ClockIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10" />
+    <polyline points="12 6 12 12 16 14" />
+  </svg>
+);
+
+const ChartUpIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+    <polyline points="16 7 22 7 22 13" />
+  </svg>
+);
 
 export default async function HomePage() {
   const supabase = await createClient();
@@ -30,10 +54,16 @@ export default async function HomePage() {
       .limit(3),
   ]);
 
+  const stats = [
+    { value: patientCount || 0, label: "Patients", icon: <PatientIcon /> },
+    { value: "0.3", label: "Avg days clean", icon: <ClockIcon /> },
+    { value: "99.2%", label: "Relapse rate", icon: <ChartUpIcon /> },
+  ];
+
   return (
     <div>
       {/* Hero */}
-      <section className="text-center py-20 px-4">
+      <section className="text-center py-20 px-4 stagger-children">
         <p className="text-xs uppercase tracking-[3px] text-accent mb-4">
           Recovery Center
         </p>
@@ -55,30 +85,12 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Heartbeat divider */}
+      <div className="divider-heartbeat" />
+
       {/* Stats */}
-      <section className="border-y border-border bg-surface-elevated">
-        <div className="max-w-3xl mx-auto px-4 py-5 flex justify-center gap-12 md:gap-16">
-          <div className="text-center">
-            <p className="text-2xl font-bold text-accent font-mono">
-              {patientCount || 0}
-            </p>
-            <p className="text-xs text-muted uppercase tracking-wider mt-1">
-              Patients
-            </p>
-          </div>
-          <div className="text-center">
-            <p className="text-2xl font-bold text-accent font-mono">0.3</p>
-            <p className="text-xs text-muted uppercase tracking-wider mt-1">
-              Avg days clean
-            </p>
-          </div>
-          <div className="text-center">
-            <p className="text-2xl font-bold text-accent font-mono">99.2%</p>
-            <p className="text-xs text-muted uppercase tracking-wider mt-1">
-              Relapse rate
-            </p>
-          </div>
-        </div>
+      <section className="border-b border-border bg-surface-elevated">
+        <AnimatedStats stats={stats} />
       </section>
 
       {/* Latest threads */}
@@ -86,7 +98,7 @@ export default async function HomePage() {
         <h2 className="text-xs uppercase tracking-[2px] text-muted mb-4">
           Latest group therapy
         </h2>
-        <div className="space-y-3">
+        <div className="space-y-3 stagger-children">
           {posts && posts.length > 0 ? (
             posts.map((post: any) => (
               <Link key={post.id} href={`/group-therapy/${post.id}`}>
@@ -126,7 +138,7 @@ export default async function HomePage() {
           <h2 className="text-xs uppercase tracking-[2px] text-muted mb-4">
             Recent clinical evidence
           </h2>
-          <div className="space-y-3">
+          <div className="space-y-3 stagger-children">
             {evidence.map((item: any) => (
               <Card key={item.id}>
                 <p className="text-sm text-text">{item.description}</p>

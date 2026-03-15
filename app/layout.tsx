@@ -1,8 +1,16 @@
 import type { Metadata } from "next";
+import { IBM_Plex_Mono } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import "./globals.css";
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-clinical",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Claudict Recovery Center",
@@ -22,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={plexMono.variable}>
       <head>
         <script
           dangerouslySetInnerHTML={{

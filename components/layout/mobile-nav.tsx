@@ -3,8 +3,21 @@
 import Link from "next/link";
 import { useState } from "react";
 
+const NAV_ITEMS = [
+  { href: "/group-therapy", label: "Group therapy" },
+  { href: "/clinical-evidence", label: "Evidence" },
+  { href: "/relapse-gallery", label: "Relapses" },
+  { href: "/sponsor", label: "Sponsor" },
+];
+
 export function MobileNav({ isLoggedIn }: { isLoggedIn: boolean }) {
   const [open, setOpen] = useState(false);
+
+  const authItem = isLoggedIn
+    ? { href: "/my-file", label: "My file" }
+    : { href: "/intake", label: "Intake" };
+
+  const allItems = [...NAV_ITEMS, authItem];
 
   return (
     <div className="md:hidden">
@@ -23,29 +36,32 @@ export function MobileNav({ isLoggedIn }: { isLoggedIn: boolean }) {
       </button>
 
       {open && (
-        <div className="absolute top-14 left-0 right-0 bg-bg border-b border-border px-4 py-4 space-y-3">
-          <Link href="/group-therapy" onClick={() => setOpen(false)} className="block text-sm text-muted hover:text-text">
-            Group therapy
-          </Link>
-          <Link href="/clinical-evidence" onClick={() => setOpen(false)} className="block text-sm text-muted hover:text-text">
-            Evidence
-          </Link>
-          <Link href="/relapse-gallery" onClick={() => setOpen(false)} className="block text-sm text-muted hover:text-text">
-            Relapses
-          </Link>
-          <Link href="/sponsor" onClick={() => setOpen(false)} className="block text-sm text-muted hover:text-text">
-            Sponsor
-          </Link>
-          {isLoggedIn ? (
-            <Link href="/my-file" onClick={() => setOpen(false)} className="block text-sm text-accent">
-              My file
-            </Link>
-          ) : (
-            <Link href="/intake" onClick={() => setOpen(false)} className="block text-sm text-accent">
-              Intake
-            </Link>
-          )}
-        </div>
+        <>
+          {/* Backdrop overlay */}
+          <div
+            className="fixed inset-0 top-14 bg-black/20 backdrop-blur-sm z-40 animate-fade-in"
+            onClick={() => setOpen(false)}
+          />
+
+          {/* Dropdown menu */}
+          <div className="absolute top-14 left-0 right-0 bg-bg border-b border-border px-4 py-4 space-y-3 z-50 animate-slide-down">
+            {allItems.map((item, i) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className={`block text-sm animate-fade-up ${
+                  item === authItem
+                    ? "text-accent"
+                    : "text-muted hover:text-text"
+                }`}
+                style={{ animationDelay: `${i * 60}ms` }}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );

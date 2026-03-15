@@ -121,6 +121,7 @@ export default async function ClinicalEvidencePage({
         </div>
       ) : (
         <EmptyState
+          variant="evidence"
           title="No evidence submitted yet."
           description="The patients are covering their tracks."
         />
