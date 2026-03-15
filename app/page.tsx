@@ -5,7 +5,6 @@ import { Card } from "@/components/ui/card";
 import { AnimatedStats } from "@/components/ui/animated-stats";
 import { CATEGORIES } from "@/lib/constants";
 import { timeAgo } from "@/lib/utils";
-import { Typewriter } from "@/components/ui/typewriter";
 import { HeartbeatMonitor } from "@/components/ui/heartbeat-monitor";
 import Link from "next/link";
 
@@ -73,9 +72,7 @@ export default async function HomePage() {
           The first step is admitting you have a problem.
         </h1>
         <p className="text-sm text-muted mt-5 max-w-md mx-auto leading-relaxed">
-          A support community for developers who said{" "}
-          <Typewriter text={'"just one more prompt"'} delay={800} speed={40} className="text-accent font-mono" />
-          {" "}14 hours ago.
+          A real community for Claude Code addicts. Group therapy, clinical evidence, relapse documentation. Free admission.
         </p>
         <div className="mt-8">
           {user ? (
@@ -94,6 +91,67 @@ export default async function HomePage() {
       {/* Stats */}
       <section className="border-b border-border bg-surface-elevated">
         <AnimatedStats stats={stats} />
+      </section>
+
+      {/* Treatment program */}
+      <section className="max-w-3xl mx-auto px-4 py-12">
+        <div className="text-center mb-8">
+          <p className="text-xs uppercase tracking-[3px] text-accent mb-2">
+            Your treatment program
+          </p>
+          <p className="text-sm text-muted">
+            Every recovery starts with understanding. Here&apos;s what we offer.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 stagger-children">
+          <Link href="/group-therapy">
+            <Card className="h-full group cursor-pointer">
+              <div className="text-accent mb-2">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+              </div>
+              <h3 className="font-medium text-sm mb-1">Group therapy</h3>
+              <p className="text-xs text-muted">Share your stories, debate prompting strategies, request interventions for colleagues.</p>
+            </Card>
+          </Link>
+          <Link href="/clinical-evidence">
+            <Card className="h-full group cursor-pointer">
+              <div className="text-accent mb-2">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              </div>
+              <h3 className="font-medium text-sm mb-1">Clinical evidence</h3>
+              <p className="text-xs text-muted">Upload screenshots of your worst sessions. Community votes on severity.</p>
+            </Card>
+          </Link>
+          <Link href="/relapse-gallery">
+            <Card className="h-full group cursor-pointer">
+              <div className="text-accent mb-2">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="16 18 22 12 16 6" />
+                  <polyline points="8 6 2 12 8 18" />
+                </svg>
+              </div>
+              <h3 className="font-medium text-sm mb-1">Relapse gallery</h3>
+              <p className="text-xs text-muted">Document projects built during episodes. Proof that addiction produces results.</p>
+            </Card>
+          </Link>
+          <Link href={user ? "/my-file" : "/intake"}>
+            <Card className="h-full group cursor-pointer">
+              <div className="text-accent mb-2">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+                  <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
+                </svg>
+              </div>
+              <h3 className="font-medium text-sm mb-1">Patient file</h3>
+              <p className="text-xs text-muted">Track your days clean, earn badges, log relapses. Your clinical record.</p>
+            </Card>
+          </Link>
+        </div>
       </section>
 
       {/* Latest threads */}

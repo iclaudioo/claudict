@@ -86,7 +86,13 @@ export function ActivityTabs({ posts, evidence, showcases }: ActivityTabsProps) 
         {active === "posts" && (
           <div className="space-y-2">
             {posts.length === 0 ? (
-              <p className="text-sm text-muted py-4">No therapy sessions yet.</p>
+              <div className="text-center py-8">
+                <p className="text-sm text-muted mb-3">No sessions on record.</p>
+                <a href="/group-therapy" className="inline-flex items-center gap-1.5 text-xs text-accent hover:text-accent-hover transition-colors">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  Start your first therapy session
+                </a>
+              </div>
             ) : (
               posts.map((post) => (
                 <Link key={post.id} href={`/group-therapy/${post.id}`}>
@@ -105,7 +111,13 @@ export function ActivityTabs({ posts, evidence, showcases }: ActivityTabsProps) 
         {active === "evidence" && (
           <div className="space-y-2">
             {evidence.length === 0 ? (
-              <p className="text-sm text-muted py-4">No evidence submitted yet.</p>
+              <div className="text-center py-8">
+                <p className="text-sm text-muted mb-3">No evidence submitted.</p>
+                <a href="/clinical-evidence" className="inline-flex items-center gap-1.5 text-xs text-accent hover:text-accent-hover transition-colors">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  Report clinical evidence
+                </a>
+              </div>
             ) : (
               evidence.map((item) => (
                 <Card key={item.id} className="py-3">
@@ -122,7 +134,13 @@ export function ActivityTabs({ posts, evidence, showcases }: ActivityTabsProps) 
         {active === "showcases" && (
           <div className="space-y-2">
             {showcases.length === 0 ? (
-              <p className="text-sm text-muted py-4">No relapses documented yet.</p>
+              <div className="text-center py-8">
+                <p className="text-sm text-muted mb-3">No relapses documented.</p>
+                <a href="/relapse-gallery" className="inline-flex items-center gap-1.5 text-xs text-accent hover:text-accent-hover transition-colors">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  Document a relapse
+                </a>
+              </div>
             ) : (
               showcases.map((s) => (
                 <Card key={s.id} className="py-3">

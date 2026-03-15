@@ -63,5 +63,5 @@ export async function submitIntake(formData: FormData) {
     });
   }
 
-  redirect("/my-file");
+  redirect("/admitted");
 }
