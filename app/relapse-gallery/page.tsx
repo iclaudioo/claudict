@@ -22,7 +22,7 @@ export default async function RelapseGalleryPage({
   searchParams: Promise<{ page?: string; tag?: string }>;
 }) {
   const params = await searchParams;
-  const page = Math.max(1, parseInt(params.page || "1", 10));
+  const page = Math.max(1, parseInt(params.page || "1", 10) || 1);
   const tag = params.tag;
 
   const supabase = await createClient();

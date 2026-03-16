@@ -42,6 +42,13 @@ export async function submitShowcase(formData: FormData) {
   let imageUrl: string | null = null;
 
   if (imageFile && imageFile.size > 0) {
+    const ALLOWED_TYPES = ["image/png", "image/jpeg", "image/webp"];
+    const MAX_SIZE = 5 * 1024 * 1024; // 5MB
+
+    if (!ALLOWED_TYPES.includes(imageFile.type) || imageFile.size > MAX_SIZE) {
+      return { error: "Invalid file type or size. Max 5MB, PNG/JPEG/WebP only." };
+    }
+
     const ext = imageFile.name.split(".").pop() || "png";
     const path = `showcases/${user.id}/${crypto.randomUUID()}.${ext}`;
 
@@ -49,12 +56,12 @@ export async function submitShowcase(formData: FormData) {
       .from("uploads")
       .upload(path, imageFile, { contentType: imageFile.type });
 
-    if (!uploadError) {
-      const {
-        data: { publicUrl },
-      } = supabase.storage.from("uploads").getPublicUrl(path);
-      imageUrl = publicUrl;
-    }
+    if (uploadError) return { error: "Upload failed" };
+
+    const {
+      data: { publicUrl },
+    } = supabase.storage.from("uploads").getPublicUrl(path);
+    imageUrl = publicUrl;
   }
 
   await supabase.from("showcases").insert({

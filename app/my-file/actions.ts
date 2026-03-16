@@ -13,7 +13,7 @@ export async function recordRelapse() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("last_relapse_at, relapse_count")
+    .select("last_relapse_at")
     .eq("id", user.id)
     .single();
 
@@ -23,15 +23,12 @@ export async function recordRelapse() {
   const lastRelapse = new Date(profile.last_relapse_at).getTime();
   if (Date.now() - lastRelapse < 60000) return;
 
-  const newCount = profile.relapse_count + 1;
+  // Atomic increment via RPC
+  const { data: newCount } = await supabase.rpc("increment_relapse_count", {
+    user_id: user.id,
+  });
 
-  await supabase
-    .from("profiles")
-    .update({
-      last_relapse_at: new Date().toISOString(),
-      relapse_count: newCount,
-    })
-    .eq("id", user.id);
+  if (!newCount) return;
 
   // Badge checks
   const badgeSlugs: string[] = [];
@@ -46,12 +43,11 @@ export async function recordRelapse() {
       .select("id, slug")
       .in("slug", badgeSlugs);
 
-    if (badges) {
-      const inserts = badges.map((b) => ({
-        profile_id: user.id,
-        badge_id: b.id,
-      }));
-      await serviceClient.from("profile_badges").insert(inserts);
+    if (badges && badges.length > 0) {
+      await serviceClient.from("profile_badges").upsert(
+        badges.map((b) => ({ profile_id: user.id, badge_id: b.id })),
+        { onConflict: "profile_id,badge_id", ignoreDuplicates: true }
+      );
     }
   }
 

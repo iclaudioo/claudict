@@ -14,7 +14,16 @@ export async function submitEvidence(formData: FormData) {
   const description = (formData.get("description") as string)?.trim();
   const imageFile = formData.get("image") as File;
 
-  if (!description || description.length > 500 || !imageFile || imageFile.size === 0) return;
+  if (!description || description.length > 500 || !imageFile || imageFile.size === 0) {
+    return { error: "Description and image are required" };
+  }
+
+  const ALLOWED_TYPES = ["image/png", "image/jpeg", "image/webp"];
+  const MAX_SIZE = 5 * 1024 * 1024; // 5MB
+
+  if (!ALLOWED_TYPES.includes(imageFile.type) || imageFile.size > MAX_SIZE) {
+    return { error: "Invalid file type or size. Max 5MB, PNG/JPEG/WebP only." };
+  }
 
   // Rate limit: 5 min cooldown
   const { data: lastEvidence } = await supabase
@@ -38,7 +47,7 @@ export async function submitEvidence(formData: FormData) {
     .from("uploads")
     .upload(path, imageFile, { contentType: imageFile.type });
 
-  if (uploadError) return;
+  if (uploadError) return { error: "Upload failed" };
 
   const {
     data: { publicUrl },
@@ -110,7 +119,7 @@ export async function toggleVote(evidenceId: string) {
       .eq("id", evidenceId)
       .single();
 
-    if (evidence && evidence.vote_count >= 99) {
+    if (evidence && evidence.vote_count >= 100) {
       const serviceClient = createServiceClient();
       const { data: badge } = await serviceClient
         .from("badges")

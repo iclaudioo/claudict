@@ -5,7 +5,6 @@ import { daysClean, formatDate } from "@/lib/utils";
 import { BadgePill } from "@/components/ui/badge-pill";
 import { RelapseButton } from "./relapse-button";
 import { ActivityTabs } from "./activity-tabs";
-import { Button } from "@/components/ui/button";
 import { LogoutButton } from "./logout-button";
 import { ShareButton } from "./share-button";
 

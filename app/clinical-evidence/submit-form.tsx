@@ -7,6 +7,7 @@ import { useState, useRef } from "react";
 
 export function SubmitEvidenceForm() {
   const [open, setOpen] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
   if (!open) {
@@ -18,7 +19,12 @@ export function SubmitEvidenceForm() {
   }
 
   async function handleSubmit(formData: FormData) {
-    await submitEvidence(formData);
+    setError(null);
+    const result = await submitEvidence(formData);
+    if (result?.error) {
+      setError(result.error);
+      return;
+    }
     formRef.current?.reset();
     setOpen(false);
   }
@@ -46,6 +52,7 @@ export function SubmitEvidenceForm() {
           placeholder="Describe the evidence..."
           className="w-full rounded-md border border-border bg-surface px-3 py-2 text-sm text-text placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent resize-y"
         />
+        {error && <p className="text-xs text-red-500">{error}</p>}
         <div className="flex gap-2">
           <Button type="submit">File evidence</Button>
           <Button type="button" variant="ghost" onClick={() => setOpen(false)}>

@@ -88,10 +88,10 @@ export function ActivityTabs({ posts, evidence, showcases }: ActivityTabsProps) 
             {posts.length === 0 ? (
               <div className="text-center py-8">
                 <p className="text-sm text-muted mb-3">No sessions on record.</p>
-                <a href="/group-therapy" className="inline-flex items-center gap-1.5 text-xs text-accent hover:text-accent-hover transition-colors">
+                <Link href="/group-therapy" className="inline-flex items-center gap-1.5 text-xs text-accent hover:text-accent-hover transition-colors">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                   Start your first therapy session
-                </a>
+                </Link>
               </div>
             ) : (
               posts.map((post) => (
@@ -113,10 +113,10 @@ export function ActivityTabs({ posts, evidence, showcases }: ActivityTabsProps) 
             {evidence.length === 0 ? (
               <div className="text-center py-8">
                 <p className="text-sm text-muted mb-3">No evidence submitted.</p>
-                <a href="/clinical-evidence" className="inline-flex items-center gap-1.5 text-xs text-accent hover:text-accent-hover transition-colors">
+                <Link href="/clinical-evidence" className="inline-flex items-center gap-1.5 text-xs text-accent hover:text-accent-hover transition-colors">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                   Report clinical evidence
-                </a>
+                </Link>
               </div>
             ) : (
               evidence.map((item) => (
@@ -136,10 +136,10 @@ export function ActivityTabs({ posts, evidence, showcases }: ActivityTabsProps) 
             {showcases.length === 0 ? (
               <div className="text-center py-8">
                 <p className="text-sm text-muted mb-3">No relapses documented.</p>
-                <a href="/relapse-gallery" className="inline-flex items-center gap-1.5 text-xs text-accent hover:text-accent-hover transition-colors">
+                <Link href="/relapse-gallery" className="inline-flex items-center gap-1.5 text-xs text-accent hover:text-accent-hover transition-colors">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                   Document a relapse
-                </a>
+                </Link>
               </div>
             ) : (
               showcases.map((s) => (

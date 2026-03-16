@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 
 export function CookieBanner() {
@@ -19,6 +19,11 @@ export function CookieBanner() {
     }
   }, [visible]);
 
+  const acknowledge = useCallback(() => {
+    localStorage.setItem("cookie_acknowledged", "1");
+    setVisible(false);
+  }, []);
+
   useEffect(() => {
     if (!visible) return;
 
@@ -30,12 +35,7 @@ export function CookieBanner() {
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [visible]);
-
-  function acknowledge() {
-    localStorage.setItem("cookie_acknowledged", "1");
-    setVisible(false);
-  }
+  }, [visible, acknowledge]);
 
   if (!visible) return null;
 

@@ -23,7 +23,7 @@ export default async function ClinicalEvidencePage({
   searchParams: Promise<{ page?: string; sort?: string }>;
 }) {
   const params = await searchParams;
-  const page = Math.max(1, parseInt(params.page || "1", 10));
+  const page = Math.max(1, parseInt(params.page || "1", 10) || 1);
   const sort = params.sort === "newest" ? "newest" : "votes";
 
   const supabase = await createClient();

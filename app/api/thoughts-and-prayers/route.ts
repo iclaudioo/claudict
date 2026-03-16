@@ -1,5 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
-import { createServiceClient } from "@/lib/supabase/server";
+import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -16,19 +15,9 @@ export async function GET() {
 export async function POST() {
   const service = createServiceClient();
 
-  // Increment via RPC or raw update
-  const { data: current } = await service
-    .from("site_stats")
-    .select("value")
-    .eq("key", "thoughts_and_prayers")
-    .single();
+  const { data: newValue } = await service.rpc("increment_site_stat", {
+    stat_key: "thoughts_and_prayers",
+  });
 
-  const newValue = (current?.value || 0) + 1;
-
-  await service
-    .from("site_stats")
-    .update({ value: newValue, updated_at: new Date().toISOString() })
-    .eq("key", "thoughts_and_prayers");
-
-  return NextResponse.json({ count: newValue });
+  return NextResponse.json({ count: newValue || 0 });
 }

@@ -57,10 +57,10 @@ export async function submitIntake(formData: FormData) {
     .single();
 
   if (badge) {
-    await serviceClient.from("profile_badges").insert({
-      profile_id: user.id,
-      badge_id: badge.id,
-    });
+    await serviceClient.from("profile_badges").upsert(
+      { profile_id: user.id, badge_id: badge.id },
+      { onConflict: "profile_id,badge_id", ignoreDuplicates: true }
+    );
   }
 
   redirect("/admitted");

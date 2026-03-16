@@ -7,6 +7,7 @@ import { useState, useRef } from "react";
 
 export function SubmitShowcaseForm() {
   const [open, setOpen] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
   if (!open) {
@@ -18,7 +19,12 @@ export function SubmitShowcaseForm() {
   }
 
   async function handleSubmit(formData: FormData) {
-    await submitShowcase(formData);
+    setError(null);
+    const result = await submitShowcase(formData);
+    if (result?.error) {
+      setError(result.error);
+      return;
+    }
     formRef.current?.reset();
     setOpen(false);
   }
@@ -64,6 +70,7 @@ export function SubmitShowcaseForm() {
             className="w-full text-sm text-muted file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border file:border-border file:bg-surface file:text-sm file:text-text file:cursor-pointer"
           />
         </div>
+        {error && <p className="text-xs text-red-500">{error}</p>}
         <div className="flex gap-2">
           <Button type="submit">Confess</Button>
           <Button type="button" variant="ghost" onClick={() => setOpen(false)}>

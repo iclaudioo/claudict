@@ -24,7 +24,7 @@ export default async function GroupTherapyPage({
   searchParams: Promise<{ page?: string; category?: string }>;
 }) {
   const params = await searchParams;
-  const page = Math.max(1, parseInt(params.page || "1", 10));
+  const page = Math.max(1, parseInt(params.page || "1", 10) || 1);
   const category = params.category;
 
   const supabase = await createClient();
