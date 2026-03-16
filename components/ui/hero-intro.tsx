@@ -56,13 +56,15 @@ export function HeroIntro({ children }: { children?: ReactNode }) {
             ? "opacity-100 translate-y-0"
             : "opacity-0 translate-y-2"
         }`}
+        style={{ transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)" }}
       >
         {QUOTE}
       </p>
       <div
-        className={`transition-all duration-500 ${
-          showRest ? "opacity-100" : "opacity-0"
+        className={`transition-all duration-700 ${
+          showRest ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
         }`}
+        style={{ transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)" }}
       >
         {children}
       </div>
