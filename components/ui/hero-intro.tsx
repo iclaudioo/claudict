@@ -34,8 +34,8 @@ export function HeroIntro({ children }: { children?: ReactNode }) {
       if (i >= WELCOME.length) {
         clearInterval(interval);
         setDoneWelcome(true);
-        setTimeout(() => setShowQuote(true), 500);
-        setTimeout(() => setShowRest(true), 1200);
+        setTimeout(() => setShowQuote(true), 400);
+        setTimeout(() => setShowRest(true), 900);
       }
     }, 40);
 
@@ -51,20 +51,18 @@ export function HeroIntro({ children }: { children?: ReactNode }) {
         )}
       </h1>
       <p
-        className={`font-heading text-lg md:text-xl text-muted mt-4 max-w-lg mx-auto italic transition-all duration-700 ${
+        className={`font-heading text-lg md:text-xl text-muted mt-4 max-w-lg mx-auto italic will-change-[transform,opacity] transition-[transform,opacity] duration-700 ease-out ${
           showQuote
             ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-2"
+            : "opacity-0 translate-y-3"
         }`}
-        style={{ transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)" }}
       >
         {QUOTE}
       </p>
       <div
-        className={`transition-all duration-700 ${
-          showRest ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+        className={`will-change-[transform,opacity] transition-[transform,opacity] duration-700 ease-out ${
+          showRest ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
         }`}
-        style={{ transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)" }}
       >
         {children}
       </div>
