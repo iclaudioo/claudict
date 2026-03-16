@@ -32,6 +32,17 @@ export function Footer() {
               Contribute
             </a>
           </div>
+          <div className="flex gap-4">
+            <Link href="/privacy" className="nav-link hover:text-text transition-colors">
+              Privacy
+            </Link>
+            <Link href="/terms" className="nav-link hover:text-text transition-colors">
+              Terms
+            </Link>
+            <Link href="/cookies" className="nav-link hover:text-text transition-colors">
+              Cookies
+            </Link>
+          </div>
           <Link
             href="/intake"
             className="text-[10px] uppercase tracking-widest flex items-center gap-1.5 text-accent/60 hover:text-accent transition-colors"

@@ -352,6 +352,26 @@ export function IntakeForm({ isLoggedIn }: { isLoggedIn: boolean }) {
               <input type="hidden" name="drug_of_choice" value={drug} />
               <input type="hidden" name="hours_per_day" value={hours} />
               {concerned && <input type="hidden" name="anyone_concerned" value="on" />}
+
+              <label className="flex items-start gap-2 mb-4 cursor-pointer">
+                <input
+                  type="checkbox"
+                  required
+                  className="mt-0.5 accent-accent"
+                />
+                <span className="text-xs text-muted">
+                  I accept the{" "}
+                  <a
+                    href="/terms"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-accent hover:underline"
+                  >
+                    facility admission terms
+                  </a>
+                </span>
+              </label>
+
               <Button type="submit" className="w-full">
                 {isLoggedIn ? "Confirm admission" : "Sign in with GitHub to confirm"}
               </Button>

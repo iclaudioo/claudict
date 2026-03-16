@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, IBM_Plex_Sans, DM_Serif_Display } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { ScrollProgressBar } from "@/components/ui/scroll-progress-bar";
+import { CookieBanner } from "@/components/ui/cookie-banner";
 import "./globals.css";
 
 const plexSans = IBM_Plex_Sans({
@@ -26,6 +27,11 @@ const dmSerif = DM_Serif_Display({
   variable: "--font-heading",
   display: "swap",
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   title: "Claudict Recovery Center",
@@ -71,6 +77,7 @@ export default function RootLayout({
           <ScrollProgressBar />
           <main className="flex-1">{children}</main>
           <Footer />
+          <CookieBanner />
         </ThemeProvider>
       </body>
     </html>
